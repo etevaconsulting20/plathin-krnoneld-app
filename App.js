@@ -17,6 +17,7 @@ import RootNavigationContainer from './src/containers/rootContainer';
 import {appConfig} from './src/settings/settings';
 import {configureStore} from './src/store/index';
 import {Provider} from 'react-redux';
+import messaging from '@react-native-firebase/messaging';
 
 class App extends Component {
   async componentDidMount() {
@@ -27,6 +28,17 @@ class App extends Component {
     // SplashScreen.hide()
     // LogBox.ignoreAllLogs();
   }
+  componentDidMount = () => {
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+    messaging()
+      .getToken()
+      .then((data) => {
+        console.log('data', data);
+      });
+    messaging().requestPermission();
+  };
 
   render() {
     return (

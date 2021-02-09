@@ -15,7 +15,7 @@ import {AsyncStorage, NotifyUser} from '../util/helpers/helpers';
 const user = (state) => state.authUser;
 
 const loginUserCall = async (model) => {
-  let url =
+   let url =
     'https://asia-south1-plathinkroneld.cloudfunctions.net/api/users/token';
   // let config = {
   //     headers: {
@@ -39,18 +39,14 @@ const logoutUserCall = async () => {
   return result;
 };
 
-function* loginUserToFb() {
+function* loginUserToFb(model) {
   try {
-    let userModel = yield select(user);
-    let model = {
-      email: userModel.email,
-      password: userModel.password,
-    };
-    const response = yield call(loginUserCall, model);
-
+   const response = yield call(loginUserCall, model.payload);
+console.log("YYYYYYYYYYYYY",response)
     yield delay(2000);
     yield put(loginUserSuccess(response.data));
   } catch (error) {
+    console.log("errorerrorerrorerrorerror",error)
     yield put(loginUserFailure());
   }
 }

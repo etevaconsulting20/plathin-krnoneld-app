@@ -39,8 +39,8 @@ export default (state = initState, action) => {
     case LOGIN_USER:
       return {
         ...state,
-        email: action.payload.email,
-        password: action.payload.password,
+        payload:action.payload,
+       // password: action.payload.password,
         loading: true,
         authError: false,
       };

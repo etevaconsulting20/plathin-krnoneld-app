@@ -6,8 +6,10 @@ import {
   Image,
   ActivityIndicator,
   ImageBackground,
+  Platform
 } from 'react-native';
 import {Button} from 'react-native-elements';
+import AsyncStorage from '@react-native-community/async-storage';
 import {StackActions} from '@react-navigation/native';
 import {Card, Input, Text, Icon} from 'react-native-elements';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
@@ -17,6 +19,7 @@ import LoadingIndicator from '../components/loadingIndicator';
 
 import {loginUser} from '../actions/index';
 
+
 class LoginScreen extends Component {
   state = {
     emailSent: false,
@@ -25,9 +28,15 @@ class LoginScreen extends Component {
     emailError: false,
     tokenError: false,
     loading: false,
+    fcmToken:""
   };
   isEmailValid = false;
   isTokenValid = false;
+  componentDidMount=async()=>{
+    let token= await AsyncStorage.getItem('token');
+    this.setState({fcmToken:token})
+    
+  }
 
   componentDidUpdate() {
     if (this.props.isLoggedIn) {
@@ -66,7 +75,11 @@ class LoginScreen extends Component {
       let model = {
         email: this.state.email,
         password: this.state.token,
+        token:this.state.fcmToken,
+        deviceType: Platform.OS,
+        deviceUId: Platform.constants.Fingerprint
       };
+    
       this.props.loginUser(model);
     }
   };

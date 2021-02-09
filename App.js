@@ -35,6 +35,10 @@ class App extends Component {
     messaging()
       .getToken()
       .then((data) => {
+        AsyncStorage.setItem(
+          'token',
+          data
+        );
         console.log('data', data);
       });
     messaging().requestPermission();

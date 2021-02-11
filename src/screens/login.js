@@ -16,9 +16,10 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import I18n from 'react-native-i18n';
 import {appConfig} from '../settings/settings';
 import LoadingIndicator from '../components/loadingIndicator';
-
+import DeviceInfo from 'react-native-device-info';
+import  getUniqueId from 'react-native-device-info';
 import {loginUser} from '../actions/index';
-
+let fcToken="";
 
 class LoginScreen extends Component {
   state = {
@@ -33,7 +34,7 @@ class LoginScreen extends Component {
   isEmailValid = false;
   isTokenValid = false;
   componentDidMount=async()=>{
-    let token= await AsyncStorage.getItem('token');
+    fcToken= await AsyncStorage.getItem('token');
     this.setState({fcmToken:token})
     
   }
@@ -72,12 +73,15 @@ class LoginScreen extends Component {
       this.setState({tokenError: true});
     }
     if (this.isTokenValid && this.isEmailValid) {
+      let uniqueId = DeviceInfo.getUniqueId();
+      console.log("this.state.fcmToken",fcToken)
+      console.log("uniqueId",uniqueId)
       let model = {
         email: this.state.email,
         password: this.state.token,
-        token:this.state.fcmToken,
+        token:fcToken,
         deviceType: Platform.OS,
-        deviceUId: Platform.constants.Fingerprint
+        deviceUId: uniqueId
       };
     
       this.props.loginUser(model);

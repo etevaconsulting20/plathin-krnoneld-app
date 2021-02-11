@@ -6572,6 +6572,11 @@
   dependencies:
     "d3" "3.5.17"
 
+"react-native-device-info@^8.0.1":
+  "integrity" "sha512-5fIcrEfxsyIJ0HZ/pHd+DeYwC81wi5tupFkPSASYXz/7QhatF8W0W6qR+YlvI6gJVSFNgQKgrPrh18RGMgbZdg=="
+  "resolved" "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-8.0.1.tgz"
+  "version" "8.0.1"
+
 "react-native-drawer@2.5.1":
   "integrity" "sha512-cxcQNbSWy5sbGi7anSVp6EDr6JarOBMY9lbFOeLFeVYbONiudoqRKbgEsSDgSw3/LFCLvUXK5zdjXCOedeytxQ=="
   "resolved" "https://registry.npmjs.org/react-native-drawer/-/react-native-drawer-2.5.1.tgz"

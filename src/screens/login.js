@@ -29,13 +29,13 @@ class LoginScreen extends Component {
     emailError: false,
     tokenError: false,
     loading: false,
-    fcmToken:""
+   
   };
   isEmailValid = false;
   isTokenValid = false;
   componentDidMount=async()=>{
     fcToken= await AsyncStorage.getItem('token');
-    this.setState({fcmToken:token})
+    
     
   }
 

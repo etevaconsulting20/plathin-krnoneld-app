@@ -9,7 +9,7 @@
 import React, {useEffect, Component} from 'react';
 
 import SplashScreen from 'react-native-splash-screen';
-import {Alert, LogBox} from 'react-native';
+import {Alert, LogBox,ToastAndroid} from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import 'react-native-gesture-handler';
@@ -30,12 +30,19 @@ class App extends Component {
   }
   componentDidMount = () => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+     let obj= await JSON.stringify(remoteMessage)
+     let parseJsonData= JSON.parse(obj)
+     console.log("parseJsonData",parseJsonData)
+     ToastAndroid.show(`${parseJsonData.notification.title}\n${parseJsonData.notification.body}`,  ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      50);
+  
     });
     messaging()
       .getToken()
-      .then((data) => {
-        AsyncStorage.setItem(
+      .then(async(data) => {
+       await AsyncStorage.setItem(
           'token',
           data
         );

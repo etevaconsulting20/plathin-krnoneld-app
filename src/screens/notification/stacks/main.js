@@ -50,6 +50,12 @@ class NotificationsMainScreen extends Component {
   componentDidMount = () => {
     this.props.getAllNotifications()
     this.props.navigation.addListener('focus', () => {
+      this.props.navigation
+      .dangerouslyGetParent()
+      .dangerouslyGetParent()
+      .setOptions({
+        headerShown: true,
+      });
       this.props.getAllNotifications();
       console.log("added");
       

@@ -32,7 +32,6 @@ class DashboardMainScreen extends Component {
   };
   onSearch = (e) => {
     let searchText = e.nativeEvent.text;
-    console.log(searchText);
     this.setState({searchText: searchText});
   };
   getFilteredList = (list) => {
@@ -48,7 +47,6 @@ class DashboardMainScreen extends Component {
   };
   render() {
     const {loading, files} = this.props;
-    console.log('files', files);
     return (
       <>
         {/* <LoadingIndicator

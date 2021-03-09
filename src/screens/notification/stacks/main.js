@@ -1,28 +1,46 @@
 import React, {Component, PureComponent} from 'react';
+import {connect} from 'react-redux';
+
 import {
   View,
   Text,
   VirtualizedList,
   SafeAreaView,
   StyleSheet,
+  Image
 } from 'react-native';
+import {getAllNotifications,getAllSeenNotifications} from "../../../actions/index"
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
-const dummyData = new Array(1000);
+//const dummyData = new Array(1000);
 
-const Item = ({title}) => {
+const Item = ({data}) => {
+ let weight = data.isSeen===true? "normal":"bold";
+ let size = data.isSeen===true? 16:17;
+ let date= new Date(data.createdDate._seconds * 1000);
+
   return (
+    
     <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
+    
+      <Text numberOfLines={1}  style={{fontSize: size,color:"#000",fontWeight:weight,width:200,marginTop:-10}}> <Icon name="comments-o" size={25} color="#900" />   {data.title}</Text>
+      {!data.isSeen && <Text style={{textAlign:"right",marginTop:-25,color:"green",height:30}}><Image  style={{width:20,height:20}} source={require('../../../assets/images/new.png')}/></Text>}
+      <Text numberOfLines={1} style={{flex:1,marginTop:1,color:"grey",fontWeight:weight}}>{data.body}</Text>
+      <Text style={{textAlign:"right",color:"grey",fontWeight:weight}}>{date.toLocaleDateString('en-GB')}</Text>
     </View>
   );
 };
 
 class PureItem extends PureComponent {
+
+
+  
   render() {
     return (
-      <TouchableOpacity onPress={this.props.toDetails}>
-        <Item title={this.props.item.title} />
+      <TouchableOpacity onPress={()=>this.props.toDetails(this.props.item)}>
+        <Item data={this.props.item} />
       </TouchableOpacity>
     );
   }
@@ -30,38 +48,40 @@ class PureItem extends PureComponent {
 
 class NotificationsMainScreen extends Component {
   componentDidMount = () => {
+    this.props.getAllNotifications()
     this.props.navigation.addListener('focus', () => {
-      debugger;
-      console.log('added');
+      this.props.getAllNotifications();
+      console.log("added");
+      
     });
+
   };
-  getItem = (data, index) => {
+ 
+  getItem = (data,i) => {
     return {
-      id: Math.random().toString(12).substring(0),
-      title: `Item ${index + 1}`,
+      ...data[i]
     };
   };
   getItemCount = (data) => {
     return data.length;
   };
-  toDetails = () => {
-    this.props.navigation.push('dashboard-details');
+
+  toDetails = (data) => {
+    this.props.getAllSeenNotifications(data.id)
+    this.props.navigation.push('dashboard-details',{data});
   };
-  getItemLayout = (data, index) => ({
-    length: 70,
-    offset: 70 * index,
-    index,
-  });
+
   render() {
+    let notification=this.props.notification && this.props.notification.reverse()
     return (
       <SafeAreaView style={styles.container}>
         <VirtualizedList
-          data={dummyData}
+          data={notification}
           // removeClippedSubviews={true}
           windowSize={21}
-          initialNumToRender={4}
+          //initialNumToRender={4}
           renderItem={({item}) => {
-            return <PureItem toDetails={this.toDetails} item={item} />;
+            return <PureItem toDetails={(item)=>this.toDetails(item)} item={item} />;
           }}
           // onScroll={() => console.log('onscroll')}
           // onMomentumScrollBegin={() => console.log('onscrollmomentum')}
@@ -80,16 +100,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   item: {
-    backgroundColor: 'grey',
-    height: 150,
+    backgroundColor: '#fff',
+    height: 100,
     justifyContent: 'center',
     marginVertical: 8,
     marginHorizontal: 16,
     padding: 20,
   },
-  title: {
-    fontSize: 32,
-  },
+  
 });
-
-export default NotificationsMainScreen;
+const mapStateToProps = ({notification}) => {
+  return notification;
+};
+export default connect(mapStateToProps, {
+  getAllNotifications,getAllSeenNotifications
+})(NotificationsMainScreen);

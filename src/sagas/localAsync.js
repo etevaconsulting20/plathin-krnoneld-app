@@ -24,7 +24,6 @@ const getObjectValue = async (key) => {
   return await AsyncStorage.getObjectData(key);
 };
 function* getAuthStatus() {
-  debugger;
   try {
     let value = yield call(getValue, 'authToken');
 

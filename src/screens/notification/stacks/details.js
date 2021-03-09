@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 import {
   View,
@@ -6,29 +7,69 @@ import {
   VirtualizedList,
   SafeAreaView,
   StyleSheet,
+  BackHandler,TouchableOpacity
 } from 'react-native';
+import {HeaderBackButton} from '@react-navigation/stack';
+import {appConfig} from '../../settings/settings';
+import {getDeleteNotification} from "../../../actions/index"
 
-const dummyData = new Array(1000);
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const Item = ({title}) => {
-  return (
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  );
-};
 
 class NotificationsMainScreen extends Component {
-  getItem = (data, index) => {
-    return {
-      id: Math.random().toString(12).substring(0),
-      title: `Item ${index + 1}`,
-    };
-  };
-  getItemCount = (data) => {
-    return data.length;
-  };
+ componentDidMount=()=>{
+    this.props.navigation.setOptions({
+      headerShown: true,
+      cardOverlayEnabled: false,
+      headerTitle: "PLATHIN & KRONELD",
+      headerTint: 'white',
+      headerTitleStyle: {marginHorizontal:-10, fontSize: 18},
+      headerLeft: () => (
+        <HeaderBackButton
+          tintColor={'white'}
+          onPress={this.onBackPress}></HeaderBackButton>
+      ),
+      
+    });
+    this.props.navigation.dangerouslyGetParent().setOptions({
+      tabBarVisible: true,
+    });
+    this.props.navigation
+      .dangerouslyGetParent()
+      .dangerouslyGetParent()
+      .setOptions({
+        headerShown: false,
+      });
+
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+
+ }
+
+ componentWillUnmount() {
+  this.props.navigation.dangerouslyGetParent().setOptions({
+    tabBarVisible: true,
+  });
+  this.props.navigation
+    .dangerouslyGetParent()
+    .dangerouslyGetParent()
+    .setOptions({
+      headerShown: true,
+    });
+  BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+}
+onBackPress = () => {
+  this.props.navigation.pop();
+  return true;
+};
+deleteNotification =(id)=>{
+
+this.props.getDeleteNotification(id);
+this.props.navigation.push('dashboard-main');
+}
+
   render() {
+    const {data}=this.props.route.params;
+    let date= new Date(data.createdDate._seconds * 1000);
     return (
       <SafeAreaView style={styles.container}>
         {/* <VirtualizedList
@@ -39,7 +80,11 @@ class NotificationsMainScreen extends Component {
           getItemCount={this.getItemCount}
           getItem={this.getItem}
         /> */}
-        <Text>Details</Text>
+        <TouchableOpacity onPress={()=>this.deleteNotification(data.id)}><Text style={{textAlign:"right",marginTop:10}}><Icon name="trash" size={15} color="#900"  /></Text></TouchableOpacity>
+        <Text style={{fontSize:16,color:"#000",fontWeight:"bold",marginTop:-20,width:200}}>{data.title} </Text>
+        <Text style={{color:"grey"}}><Icon name="calendar-alt" size={15} color="grey" />  {date.toLocaleDateString('en-GB')}</Text>
+        <Text style={{fontSize:14,marginTop:20}}>{data.body}</Text>
+        
       </SafeAreaView>
     );
   }
@@ -48,6 +93,7 @@ class NotificationsMainScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding:20
   },
   item: {
     backgroundColor: 'red',
@@ -61,5 +107,10 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
 });
+const mapStateToProps = ({notification}) => {
+  return notification;
+};
+export default connect(mapStateToProps, {
+  getDeleteNotification
+})(NotificationsMainScreen);
 
-export default NotificationsMainScreen;

@@ -9,6 +9,15 @@ import {
   CHECK_AUTH_STATUS,
   CHECK_AUTH_STATUS_SUCCESS,
   AUTH_ERROR,
+  FORGOT_PAASWORD,
+  FORGOT_PAASWORD_FAILURE,
+  FORGOT_PAASWORD_SUCCESS,
+  CHANGE_PASSWORD,
+  CHANGE_PASSWORD_FAILURE,
+  CHANGE_PASSWORD_SUCCESS,
+  UPDATE_USER,
+  UPDATE_USER_FAILURE,
+  UPDATE_USER_SUCCESS,
 } from '../actions/types';
 
 const initState = {
@@ -48,8 +57,7 @@ export default (state = initState, action) => {
       let token = action.payload.token;
       let email = action.payload.email;
 
-      //   localStorage.setItem('token', token);
-      //   localStorage.setItem('email', email);
+      AsyncStorage.storeObjectData("profileData",action.payload)
       AsyncStorage.storeStringData('authToken', token);
       return {...state, loading: false, isLoggedIn: true};
     }
@@ -78,6 +86,50 @@ export default (state = initState, action) => {
       AsyncStorage.remove('authToken');
       return {...state, loading: false, authError: true, isLoggedIn: false};
 
+case FORGOT_PAASWORD:
+  return {
+    ...state,
+    loading: true,
+    email: action.payload,
+  };
+case FORGOT_PAASWORD_SUCCESS: {
+  return {...state, loading: false, isLoggedIn: false};
+}
+
+case FORGOT_PAASWORD_FAILURE:
+  return {...state, loading: false};
+
+  case UPDATE_USER:
+  return {
+    ...state,
+    loading: true,
+    payload: action.payload,
+  };
+case UPDATE_USER_SUCCESS: {
+  NotifyUser.success('Data Updated Succesfully');
+  return {...state, loading: false};
+}
+
+case UPDATE_USER_FAILURE:
+  NotifyUser.error(I18n.t('notification-networkerror'));
+  return {...state, loading: false};
+////////////////////////////////////////////////////
+
+case CHANGE_PASSWORD:
+  return {
+    ...state,
+    loading: true,
+    email: action.payload,
+  };
+case CHANGE_PASSWORD_SUCCESS: {
+  return {...state, loading: false, isLoggedIn: false};
+}
+
+case CHANGE_PASSWORD_FAILURE:
+  return {...state, loading: false};
+
+case AUTH_ERROR:
+  return {...state, loading: false, isLoggedIn: false};
     default:
       return {...state};
   }

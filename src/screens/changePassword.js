@@ -17,83 +17,70 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import I18n from 'react-native-i18n';
 import {appConfig} from '../settings/settings';
 import LoadingIndicator from '../components/loadingIndicator';
-import DeviceInfo from 'react-native-device-info';
-import  getUniqueId from 'react-native-device-info';
-import {loginUser} from '../actions/index';
-let fcToken="";
+import {changePassword} from '../actions/index';
 
-class LoginScreen extends Component {
+class ChangePwdScreen extends Component {
   state = {
-    emailSent: false,
-    email: '',
-    token: '',
-    emailError: false,
+    confirmPasswordError: false,
+    password: '',
+    confirmPassword: '',
+    passwordError: false,
     tokenError: false,
     loading: false,
    
   };
-  isEmailValid = false;
-  isTokenValid = false;
-  componentDidMount=async()=>{
-    fcToken= await AsyncStorage.getItem('token');
-    
-    
-  }
+  isPasswordValid = false;
+  isConfirmPwdValid = false;
+  str = this.props.location.search;
+  code = str.search("oobCode");
+  ext = str.search("&apiKey");
+  oobCode=str.slice(code+8,ext);
+  
 
-  componentDidUpdate() {
-    if (this.props.isLoggedIn) {
-      this.gotoMainApp();
-    }
-  }
+  onPassChange(event) {
+    var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
 
-  onEmailChange(event) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gim;
-    this.setState({email: event.nativeEvent.text});
+    this.setState({password: event.nativeEvent.text});
     if (re.test(event.nativeEvent.text)) {
-      this.isEmailValid = true;
-      this.setState({emailError: false});
+        
+      this.isPasswordValid = true;
+      this.setState({passwordError: false});
       return;
     }
-    this.isEmailValid = false;
+    this.isPasswordValid = false;
   }
-  onPinChange(event) {
-    this.setState({token: event.nativeEvent.text});
-    if (event.nativeEvent.text != '') {
-      this.isTokenValid = true;
-      this.setState({tokenError: false});
+  onConfirmPassChange(event) {
+    this.setState({confirmPassword: event.nativeEvent.text});
+    if (event.nativeEvent.text === this.state.password) {
+      this.isConfirmPwdValid = true;
+      this.setState({confirmPasswordError: false});
       return;
     }
-    this.isTokenValid = false;
+    this.isConfirmPwdValid = false;
   }
 
+  
   sendMagicLink = () => {
-    if (!this.isEmailValid) {
-      this.setState({emailError: true});
+    if (!this.isPasswordValid) {
+      this.setState({passwordError: true});
     }
-    if (!this.isTokenValid) {
-      this.setState({tokenError: true});
-    }
-    if (this.isTokenValid && this.isEmailValid) {
-      let uniqueId = DeviceInfo.getUniqueId();
-      let model = {
-        email: this.state.email,
-        password: this.state.token,
-        token:fcToken,
-        deviceType: Platform.OS,
-        deviceUId: uniqueId
-      };
+    if (!this.isConfirmPwdValid) {
+        this.setState({confirmPasswordError: true});
+      }
+    if (this.isConfirmPwdValid && this.isPasswordValid) {
+        let data={
+            "oobCode": oobCode,
+            "password": this.state.password
+          }
     
-      this.props.loginUser(model);
+      this.props.changePassword(data);
     }
   };
-  gotoMainApp = () => {
-    this.props.navigation.dispatch(StackActions.replace('mainApp'));
+  gotToLogin = () => {
+    this.props.navigation.dispatch(StackActions.replace('login'));
   };
-  gotoForgetPwdScreen = () => {
-     
-    this.props.navigation.dispatch(StackActions.replace('forgotPassword'))
-  };
-  getFormContent = (emailSent) => {
+  getFormContent = () => {
+
     return (
       <>
         <Input
@@ -101,13 +88,14 @@ class LoginScreen extends Component {
             fontFamily: appConfig.fontFamily,
             color: appConfig.loginTextColor,
           }}
-          key="email-input-key"
-          value={this.state.email}
+          key="pin-input-key"
+          value={this.state.password}
+          secureTextEntry={true}
           errorMessage={
-            this.state.emailError ? I18n.t('login-emailErrorMessage') : null
+            this.state.passwordError ? I18n.t('login-passwordErrorMessage') : null
           }
           errorStyle={{color: appConfig.loginTextColor}}
-          onChange={(e) => this.onEmailChange(e)}
+          onChange={(e) => this.onPassChange(e)}
           leftIcon={
             <Icon
               type="font-awesome"
@@ -129,25 +117,25 @@ class LoginScreen extends Component {
           }
           placeholder={I18n.t('login-emailPlaceholder')}
           placeholderTextColor={'grey'}></Input>
-        <Input
-          key="pin-input-key"
+          <Input
           style={{
             fontFamily: appConfig.fontFamily,
             color: appConfig.loginTextColor,
           }}
+          key="pin-input-keys"
+          value={this.state.confirmPassword}
           secureTextEntry={true}
-          value={this.state.token}
-          onChange={(e) => this.onPinChange(e)}
           errorMessage={
-            this.state.tokenError ? I18n.t('login-pinErrorMessage') : null
+            this.state.confirmPasswordError ? I18n.t('login-confirmPasswordErrorMessage') : null
           }
           errorStyle={{color: appConfig.loginTextColor}}
+          onChange={(e) => this.onConfirmPassChange(e)}
           leftIcon={
             <Icon
               type="font-awesome"
               solid={true}
               size={18}
-              name="user-secret"
+              name="envelope"
               color={appConfig.loginTextColor}
             />
           }
@@ -158,32 +146,47 @@ class LoginScreen extends Component {
                 color: appConfig.loginTextColor,
               }}
               h5>
-              {I18n.t('login-pinLabel')}
+              {I18n.t('login-emailLabel')}
             </Text>
           }
-          placeholder={I18n.t('login-pinPlaceholder')}
+          placeholder={I18n.t('login-emailPlaceholder')}
           placeholderTextColor={'grey'}></Input>
+          <View style={{display:"flex", flexDirection:"row",}}>
+              <View style={{flex:1}}>
         <Button
           key="get-pin-btn-key"
           titleStyle={{fontFamily: appConfig.fontFamily}}
           buttonStyle={{
             backgroundColor: appConfig.primaryColor,
             padding: 10,
-            width: 320,
+            width: 100,
             marginTop: 10,
+            marginLeft:10
           }}
-          title={I18n.t('login-loginButtonTitle')}
+          title="Submit"
           onPress={() => this.sendMagicLink()}></Button>
-          <Text style={{color: 'blue',textDecorationLine:"underline",marginTop: 10,}}
-      onPress={() => this.gotoForgetPwdScreen()}>
- {I18n.t('login-forgotPassword')}
-</Text>
+          </View>
+          <View style={{flex:1}}>
+          <Button
+          key="get-pin-btn-key"
+          titleStyle={{fontFamily: appConfig.fontFamily}}
+          buttonStyle={{
+            backgroundColor: appConfig.primaryColor,
+            padding: 10,
+            width: 100,
+            marginTop: 10,
+            marginRight:20
+          }}
+          title="Cancel"
+          onPress={() => this.gotToLogin()}></Button>
+          </View>
+         </View>
       </>
     );
   };
 
   render() {
-    const {loading, emailSent} = this.props;
+    const {loading} = this.props;
 
     return (
       <>
@@ -217,7 +220,7 @@ class LoginScreen extends Component {
               </View>
 
               <View style={style.loginCard}>
-                {this.getFormContent(emailSent)}
+                {this.getFormContent()}
                 <View style={{paddingTop: 10}}>
                   <Text
                     style={{
@@ -301,5 +304,5 @@ const mapStateToProps = ({authUser}) => {
   return authUser;
 };
 export default connect(mapStateToProps, {
-  loginUser,
-})(LoginScreen);
+  changePassword,
+})(ChangePwdScreen);

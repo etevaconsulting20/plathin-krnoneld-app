@@ -39,7 +39,6 @@ const downloadfilesCall = async (id) => {
       Authorization: 'Bearer ' + token,
     },
   };
-  console.log('url', url);
   let result = await axios.get(url, config);
 
   return result;

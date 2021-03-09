@@ -17,12 +17,9 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import I18n from 'react-native-i18n';
 import {appConfig} from '../settings/settings';
 import LoadingIndicator from '../components/loadingIndicator';
-import DeviceInfo from 'react-native-device-info';
-import  getUniqueId from 'react-native-device-info';
-import {loginUser} from '../actions/index';
-let fcToken="";
+import {forgotPassword} from '../actions/index';
 
-class LoginScreen extends Component {
+class ForgotScreen extends Component {
   state = {
     emailSent: false,
     email: '',
@@ -34,17 +31,7 @@ class LoginScreen extends Component {
   };
   isEmailValid = false;
   isTokenValid = false;
-  componentDidMount=async()=>{
-    fcToken= await AsyncStorage.getItem('token');
-    
-    
-  }
-
-  componentDidUpdate() {
-    if (this.props.isLoggedIn) {
-      this.gotoMainApp();
-    }
-  }
+  
 
   onEmailChange(event) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gim;
@@ -56,42 +43,24 @@ class LoginScreen extends Component {
     }
     this.isEmailValid = false;
   }
-  onPinChange(event) {
-    this.setState({token: event.nativeEvent.text});
-    if (event.nativeEvent.text != '') {
-      this.isTokenValid = true;
-      this.setState({tokenError: false});
-      return;
-    }
-    this.isTokenValid = false;
-  }
 
+  
   sendMagicLink = () => {
     if (!this.isEmailValid) {
       this.setState({emailError: true});
     }
-    if (!this.isTokenValid) {
-      this.setState({tokenError: true});
-    }
-    if (this.isTokenValid && this.isEmailValid) {
-      let uniqueId = DeviceInfo.getUniqueId();
+  
+    if (this.isEmailValid) {
       let model = {
         email: this.state.email,
-        password: this.state.token,
-        token:fcToken,
-        deviceType: Platform.OS,
-        deviceUId: uniqueId
+        
       };
     
-      this.props.loginUser(model);
+      this.props.forgotPassword(model);
     }
   };
-  gotoMainApp = () => {
-    this.props.navigation.dispatch(StackActions.replace('mainApp'));
-  };
-  gotoForgetPwdScreen = () => {
-     
-    this.props.navigation.dispatch(StackActions.replace('forgotPassword'))
+  gotToLogin = () => {
+    this.props.navigation.dispatch(StackActions.replace('login'));
   };
   getFormContent = (emailSent) => {
     return (
@@ -129,55 +98,35 @@ class LoginScreen extends Component {
           }
           placeholder={I18n.t('login-emailPlaceholder')}
           placeholderTextColor={'grey'}></Input>
-        <Input
-          key="pin-input-key"
-          style={{
-            fontFamily: appConfig.fontFamily,
-            color: appConfig.loginTextColor,
-          }}
-          secureTextEntry={true}
-          value={this.state.token}
-          onChange={(e) => this.onPinChange(e)}
-          errorMessage={
-            this.state.tokenError ? I18n.t('login-pinErrorMessage') : null
-          }
-          errorStyle={{color: appConfig.loginTextColor}}
-          leftIcon={
-            <Icon
-              type="font-awesome"
-              solid={true}
-              size={18}
-              name="user-secret"
-              color={appConfig.loginTextColor}
-            />
-          }
-          label={
-            <Text
-              style={{
-                fontFamily: appConfig.fontFamily,
-                color: appConfig.loginTextColor,
-              }}
-              h5>
-              {I18n.t('login-pinLabel')}
-            </Text>
-          }
-          placeholder={I18n.t('login-pinPlaceholder')}
-          placeholderTextColor={'grey'}></Input>
+          <View style={{display:"flex", flexDirection:"row",}}>
+              <View style={{flex:1}}>
         <Button
           key="get-pin-btn-key"
           titleStyle={{fontFamily: appConfig.fontFamily}}
           buttonStyle={{
             backgroundColor: appConfig.primaryColor,
             padding: 10,
-            width: 320,
+            width: 100,
+            marginTop: 10,
+            marginLeft:10
+          }}
+          title={I18n.t('login-submit')}
+          onPress={() => this.sendMagicLink()}></Button>
+          </View>
+          <View style={{flex:1,marginRight:30}}>
+          <Button
+          key="get-pin-btn-key"
+          titleStyle={{fontFamily: appConfig.fontFamily}}
+          buttonStyle={{
+            backgroundColor: "#ddd",
+            padding: 10,
+            width: 100,
             marginTop: 10,
           }}
-          title={I18n.t('login-loginButtonTitle')}
-          onPress={() => this.sendMagicLink()}></Button>
-          <Text style={{color: 'blue',textDecorationLine:"underline",marginTop: 10,}}
-      onPress={() => this.gotoForgetPwdScreen()}>
- {I18n.t('login-forgotPassword')}
-</Text>
+          title={I18n.t('logout-cancel')}
+          onPress={() => this.gotToLogin()}></Button>
+          </View>
+         </View>
       </>
     );
   };
@@ -301,5 +250,5 @@ const mapStateToProps = ({authUser}) => {
   return authUser;
 };
 export default connect(mapStateToProps, {
-  loginUser,
-})(LoginScreen);
+  forgotPassword,
+})(ForgotScreen);

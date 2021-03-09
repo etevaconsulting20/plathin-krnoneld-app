@@ -32,7 +32,6 @@ class App extends Component {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
      let obj= await JSON.stringify(remoteMessage)
      let parseJsonData= JSON.parse(obj)
-     console.log("parseJsonData",parseJsonData)
      ToastAndroid.show(`${parseJsonData.notification.title}\n${parseJsonData.notification.body}`,  ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       25,

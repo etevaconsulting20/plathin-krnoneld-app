@@ -30,8 +30,8 @@ function MainApp(props) {
       name: 'dashboard',
       component: DashboardScreen,
       label: 'tabs-dashboard',
-      iconName: 'dashboard',
-      iconType: 'MaterialCommunityIcons',
+      iconName: "description",
+      iconType: 'Material-Icons',
       iconColor: appConfig.textColor,
     },
     {
@@ -140,8 +140,8 @@ function MainApp(props) {
     </>
   );
 }
-const mapStateToProps = ({settings, files, authUser}) => {
-  return {...settings, ...files, ...authUser};
+const mapStateToProps = ({settings, files, authUser,notification}) => {
+  return {...settings, ...files, ...authUser,...notification};
 };
 
 const style = StyleSheet.create({

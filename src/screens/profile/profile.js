@@ -25,9 +25,9 @@ const ProfileScreen = (props) => {
       <ProfileStack.Screen name={'profile-main'} options={{headerShown: false}}>
         {(props) => <SettingsMainScreen {...props} locale={locale} />}
       </ProfileStack.Screen>
-      <ProfileStack.Screen name={'profile-language'}>
-        {(props) => <SettingsLanguageScreen {...props} locale={locale} />}
-      </ProfileStack.Screen>
+      {/* <ProfileStack.Screen name={'profile-language'}  options={{headerShown: false}}>
+        {(props) => <SettingsLanguageScreen {...props} locale={locale}  />}
+      </ProfileStack.Screen> */}
     </ProfileStack.Navigator>
   );
 };

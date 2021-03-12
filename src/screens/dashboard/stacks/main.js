@@ -30,9 +30,8 @@ class DashboardMainScreen extends Component {
   refreshPage = () => {
     this.props.getAllFiles();
   };
-  onSearch = (e) => {
-    let searchText = e.nativeEvent.text;
-    this.setState({searchText: searchText});
+  onSearch = (text) => {
+    this.setState({searchText: text});
   };
   getFilteredList = (list) => {
     let searchText = this.state.searchText;
@@ -40,7 +39,7 @@ class DashboardMainScreen extends Component {
       return list;
     }
     let result = filter(list, (itm) => {
-      return includes(itm.name, searchText);
+      return includes((itm.name).toLowerCase(), searchText.toLowerCase());
     });
 
     return result;
@@ -52,14 +51,14 @@ class DashboardMainScreen extends Component {
         {/* <LoadingIndicator
           isVissible={loading}
           message={'fetching files'}></LoadingIndicator> */}
-        <SearchBar
-          placeholder="Type Here..."
-          round={true}
-          lightTheme={true}
-          onChange={(e) => this.onSearch(e)}
-          value={this.state.searchText}
-          // s
-        />
+          <SearchBar
+                lightTheme
+                placeholder="Type Here..."
+                round
+                onChangeText={(text) => this.onSearch(text)}
+                value={this.state.searchText}
+              />
+       
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={loading} onRefresh={this.refreshPage} />

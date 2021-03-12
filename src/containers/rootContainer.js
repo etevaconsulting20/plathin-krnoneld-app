@@ -7,6 +7,7 @@ import I18n from '../util/locales/setup';
 import {Icon} from 'react-native-elements';
 import FlashMessage from 'react-native-flash-message';
 import LoginScreen from '../screens/login';
+import LogoScreen from '../screens/logoScreen';
 import ForgotScreen from '../screens/forgotPassword';
 import ChangePwdScreen from "../screens/changePassword"
 import LogoutScreen from '../screens/logout';
@@ -83,12 +84,18 @@ function RootNavigationContainer(props) {
       />
       <NavigationContainer>
         <StackNavigator.Navigator>
+        <StackNavigator.Screen
+            name="login"
+            component={isLoggedIn ? LogoScreen : LoginScreen}
+            options={{headerShown: false}}></StackNavigator.Screen>
+             <StackNavigator.Screen
+            name="logoScreen"
+            component={LogoScreen}
+            options={{headerShown: false}}></StackNavigator.Screen>
           <StackNavigator.Screen
             name="mainApp"
-            component={isLoggedIn ? MainApp : LoginScreen}
-            options={
-              isLoggedIn ? mainAppHeaderOptions : {headerShown: false}
-            }></StackNavigator.Screen>
+            component={MainApp}
+            options={mainAppHeaderOptions}></StackNavigator.Screen>
             <StackNavigator.Screen
             name="forgotPassword"
             component={ForgotScreen}
@@ -97,10 +104,10 @@ function RootNavigationContainer(props) {
             name="auth/change-password"
             component={ChangePwdScreen}
             options={{headerShown: false}}></StackNavigator.Screen>
-          <StackNavigator.Screen
+          {/* <StackNavigator.Screen
             name="login"
             component={LoginScreen}
-            options={{headerShown: false}}></StackNavigator.Screen>
+            options={{headerShown: false}}></StackNavigator.Screen> */}
           <StackNavigator.Screen
             name="logout"
             component={LogoutScreen}

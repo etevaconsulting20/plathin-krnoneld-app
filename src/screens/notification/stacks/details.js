@@ -63,7 +63,7 @@ onBackPress = () => {
 };
 deleteNotification =(id)=>{
 
-// this.props.getDeleteNotification(id);
+this.props.getDeleteNotification(id);
 this.props.navigation.push('dashboard-main');
 }
 

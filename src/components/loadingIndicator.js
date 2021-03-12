@@ -31,7 +31,7 @@ export default ({isVissible, color, message}) => {
             fontFamily: appConfig.fontFamily,
             fontSize: 16,
           }}>
-          {message}
+          Loading...
         </Text>
       </>
     </Overlay>

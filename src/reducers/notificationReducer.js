@@ -44,7 +44,7 @@ export default (state = initState, action) => {
     }
 
     case SEEN_NOTIFICATION_FAILURE:
-      NotifyUser.error("Something went wrong");
+      NotifyUser.error(I18n.t('notification_dataError'));
       //let error = action.payload;
       return {...state, loading: false};
 
@@ -55,12 +55,12 @@ export default (state = initState, action) => {
         payload:action.payload
       };
     case DELETE_NOTIFICATION_SUCCESS: {
-       NotifyUser.success("Delete Notification Successfully");
+       NotifyUser.success(I18n.t('notification_delete'));
       return {...state, loading: false};
     }
 
     case DELETE_NOTIFICATION_FAILURE:
-      NotifyUser.error("Something went wrong");
+      NotifyUser.error(I18n.t('notification_dataError'));
       //let error = action.payload;
       return {...state, loading: false};
 

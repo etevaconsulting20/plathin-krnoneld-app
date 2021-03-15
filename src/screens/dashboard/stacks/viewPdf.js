@@ -17,6 +17,7 @@ class ViewPdfScreen extends Component {
   componentDidMount = () => {
     let id = this.props.route.params.id;
     let name = this.props.route.params.name;
+    
     this.props.navigation.setOptions({
       headerShown: true,
       cardOverlayEnabled: false,
@@ -99,6 +100,7 @@ class ViewPdfScreen extends Component {
   render() {
     const resourceType = 'base64';
     const {fileBase64, loading} = this.props;
+    
     return (
       <>
         <LoadingIndicator isVissible={loading} message={'Opening File'} />

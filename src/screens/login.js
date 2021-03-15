@@ -175,7 +175,7 @@ class LoginScreen extends Component {
           }}
           title={I18n.t('login-loginButtonTitle')}
           onPress={() => this.sendMagicLink()}></Button>
-          <TouchableOpacity  style={{marginTop: 20,width:100}} onPress={() => this.gotoForgetPwdScreen()}>
+          <TouchableOpacity  style={{marginTop: 20,width:160}} onPress={() => this.gotoForgetPwdScreen()}>
         <Text style={{ color: 'blue', textDecorationLine: "underline" }}
           onPress={() => this.gotoForgetPwdScreen()}>
           {I18n.t('login-forgotPassword')}

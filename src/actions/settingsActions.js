@@ -1,4 +1,4 @@
-import {CHANGE_LANGUAGE,GET_USER_SETTINGS,GET_USER_SETTINGS_SUCCESS} from "./types";
+import {CHANGE_LANGUAGE,GET_USER_SETTINGS,GET_USER_SETTINGS_SUCCESS,USER_INFO,USER_INFO_SUCCESS,USER_INFO_FAILURE} from "./types";
 
 
 export const changeLanguage=(languageCode)=>(
@@ -21,4 +21,3 @@ export const getSettingsSuccess=(settings)=>(
         
     }
 )
-

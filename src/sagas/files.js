@@ -31,6 +31,7 @@ const getAllfilesCall = async () => {
 };
 
 const downloadfilesCall = async (id) => {
+
   let url = `https://asia-south1-plathinkroneld.cloudfunctions.net/api/files/${id}/download`;
   let token = await AsyncStorage.getStringData('authToken');
   let config = {
@@ -39,7 +40,7 @@ const downloadfilesCall = async (id) => {
       Authorization: 'Bearer ' + token,
     },
   };
-  let result = await axios.get(url, config);
+  let result = await axios.get(url,config);
 
   return result;
 };
@@ -75,6 +76,7 @@ function* downloadFilefromServer() {
     let files = yield select(user);
 
     let id = files.fileId;
+    
     let name = files.fileName;
     const response = yield call(downloadfilesCall, id);
     let res = yield blobToBase64(response.data);

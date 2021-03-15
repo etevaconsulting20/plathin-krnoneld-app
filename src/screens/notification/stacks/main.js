@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {getAllNotifications,getAllSeenNotifications} from "../../../actions/index"
 import Icon from 'react-native-vector-icons/FontAwesome';
+import moment, {locales} from 'moment';
 
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -19,11 +20,7 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 const Item = ({data}) => {
  let weight = data.isSeen===true? "normal":"bold";
  let size = data.isSeen===true? 16:17;
- let date= new Date(data.createdDate._seconds * 1000);
- let abc=new Date(date).toLocaleDateString('en-GB', {day: 'numeric', month: 'numeric', year: 'numeric'}).replace(/ /g, '-');
- console.log("abc",abc);
- console.log("date",date);
- 
+ let date= moment(data.createdDate._seconds * 1000).format("DD/MM/YYYY")
 
   return (
     
@@ -32,7 +29,7 @@ const Item = ({data}) => {
       <Text numberOfLines={1}  style={{fontSize: size,color:"#000",fontWeight:weight,width:200,marginTop:-10}}> <Icon name="comments-o" size={25} color="#900" />   {data.title}</Text>
       {!data.isSeen && <Text style={{textAlign:"right",marginTop:-25,color:"green",height:30}}><Image  style={{width:20,height:20}} source={require('../../../assets/images/new.png')}/></Text>}
       <Text numberOfLines={1} style={{flex:1,marginTop:1,color:"grey",fontWeight:weight}}>{data.body}</Text>
-      <Text style={{textAlign:"right",color:"grey",fontWeight:weight}}>  {abc }</Text>
+      <Text style={{textAlign:"right",color:"grey",fontWeight:weight}}>  {date }</Text>
     </View>
   );
 };

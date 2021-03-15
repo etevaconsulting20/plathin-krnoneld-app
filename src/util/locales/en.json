@@ -34,6 +34,8 @@
     "tabs-notification":"Notifications",
     "settings-changeLanguageHeader": "Change Language",
     "profile-aboutyou": "About you",
+    "placeholder_typeHere":"Type Here...",
+
     "profile-defaultPreferences": "Default Preferences",
     "profile-domainPreferences": "Domain Preferences",
     "profile-consentHeading": "Consents",
@@ -62,7 +64,7 @@
     "about-nickName": "Nickname",
     "about-countryCode": "Country Code",
     "about-phoneNumber": "Phone no",
-    "about-phoneNumberError":"Please enter a valid 9 digit phone number.",
+    "about-phoneNumberError":"Please enter a valid 10 digit phone number.",
     "about-address1": "Address 1",
     "about-address2": "Address 2",
     "about-city": "City",
@@ -76,5 +78,9 @@
     "communication-webNotificationSent": "Web notification sent on ",
     "communication-mobileNotificationSent": "Mobile notification sent on ",
     "communication-SMSSent": "SMS sent on ",
-    "settings-editProfile":"Edit Profile"
+    "settings-editProfile":"Edit Profile",
+    "notification_dataUpdate":"Data Updated Succesfully",
+    "notification_dataError":"Something went wrong,Please try again",
+    "notification_delete":"Delete Notification Successfully",
+    "btn_update":"Update"
 }

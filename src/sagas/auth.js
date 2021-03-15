@@ -2,7 +2,7 @@
  * Auth Sagas
  */
 import {all, call, put, takeEvery, select, delay} from 'redux-saga/effects';
-import {LOGIN_USER, LOGOUT_USER,CHANGE_PASSWORD,FORGOT_PAASWORD,UPDATE_USER} from '../actions/types';
+import {LOGIN_USER, LOGOUT_USER,CHANGE_PASSWORD,FORGOT_PAASWORD,UPDATE_USER,USER_INFO} from '../actions/types';
 import {
   loginUserSuccess,
   loginUserFailure,
@@ -13,7 +13,9 @@ import {
   changePasswordSuccess,
   changePasswordFailure,
   updateFailure,
-  updateSuccess
+  updateSuccess,
+  getUserInfoSuccess,
+  getUserInfoFailure
 } from '../actions/index';
 import axios from 'axios';
 import {AsyncStorage, NotifyUser} from '../util/helpers/helpers';
@@ -77,7 +79,17 @@ const updateCall=async(model)=>{
  
   return result
 }
+const userInfoCall=async()=>{
+  let url = "https://asia-south1-plathinkroneld.cloudfunctions.net/api/users";
+  let token = await AsyncStorage.getStringData('authToken');
+  let config = {
 
+      headers: { 'Authorization': "Bearer " + token }
+  }
+  let result = await axios.get(url,config)
+ 
+  return result
+}
 function* loginUserToFb(model) {
   try {
    const response = yield call(loginUserCall, model.payload);
@@ -133,12 +145,27 @@ function* updateToFb(model) {
   }
 
 }
+function* updateUserInfoCall() {
+  try {
+     let res= yield call(userInfoCall)
+     console.log("calll");
+     
+      yield put(getUserInfoSuccess(res.data))
+
+  } catch (error) {
+    console.log("errrrrrrrrr",error);
+    
+      yield put(getUserInfoFailure())
+  }
+
+}
 export const authenticationSagas = [
   takeEvery(LOGIN_USER, loginUserToFb),
   takeEvery(LOGOUT_USER, logoutUserToFb),
   takeEvery(FORGOT_PAASWORD,forgotpasswordToFb),
   takeEvery(CHANGE_PASSWORD,changepwdToFb),
-  takeEvery(UPDATE_USER,updateToFb)
+  takeEvery(UPDATE_USER,updateToFb),
+  takeEvery(USER_INFO,updateUserInfoCall)
 ];
 
 /**

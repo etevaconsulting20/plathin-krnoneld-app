@@ -12,6 +12,7 @@ import {
 import {HeaderBackButton} from '@react-navigation/stack';
 import {appConfig} from '../../settings/settings';
 import {getDeleteNotification} from "../../../actions/index"
+import moment, {locales} from 'moment';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -69,7 +70,8 @@ this.props.navigation.push('dashboard-main');
 
   render() {
     const {data}=this.props.route.params;
-    let date= new Date(data.createdDate._seconds * 1000);
+    let date= moment(data.createdDate._seconds * 1000).format("DD/MM/YYYY")
+
     return (
       <SafeAreaView style={styles.container}>
         {/* <VirtualizedList
@@ -82,7 +84,7 @@ this.props.navigation.push('dashboard-main');
         /> */}
         <TouchableOpacity onPress={()=>this.deleteNotification(data.id)}><Text style={{textAlign:"right",marginTop:10}}><Icon name="trash" size={15} color="#900"  /></Text></TouchableOpacity>
         <Text style={{fontSize:16,color:"#000",fontWeight:"bold",marginTop:-20,width:200}}>{data.title} </Text>
-        <Text style={{color:"grey"}}><Icon name="calendar-alt" size={15} color="grey" />  {date.toLocaleDateString('en-GB')}</Text>
+        <Text style={{color:"grey"}}><Icon name="calendar-alt" size={15} color="grey" />  {date}</Text>
         <Text style={{fontSize:14,marginTop:20}}>{data.body}</Text>
         
       </SafeAreaView>

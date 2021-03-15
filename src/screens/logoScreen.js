@@ -9,17 +9,17 @@ import { StackActions } from "@react-navigation/native"
 class LogoScreen extends Component {
     componentDidMount=()=>{
        
-        setTimeout(()=>{
-            this.props.navigation.dispatch(
-                StackActions.replace("mainApp"))
-        },4000);
+        // setTimeout(()=>{
+        //     this.props.navigation.dispatch(
+        //         StackActions.replace("mainApp"))
+        // },4000);
        
     }
 
     render() {
         return(
         <View
-            style={{backgroundColor:"transparent",marginVertical:290,padding:5}}
+            style={{backgroundColor:"transparent",marginVertical:290,padding:5,marginHorizontal:5}}
             
         >
             <>

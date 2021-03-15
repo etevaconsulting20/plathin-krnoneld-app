@@ -18,6 +18,9 @@ import {
   UPDATE_USER,
   UPDATE_USER_FAILURE,
   UPDATE_USER_SUCCESS,
+  USER_INFO,
+  USER_INFO_SUCCESS,
+  USER_INFO_FAILURE
 } from '../actions/types';
 
 const initState = {
@@ -27,6 +30,7 @@ const initState = {
   loading: false,
   user: null,
   authError: false,
+  userInfo:null
 };
 import {AsyncStorage, NotifyUser} from '../util/helpers/helpers';
 import I18n from 'react-native-i18n';
@@ -106,12 +110,12 @@ case FORGOT_PAASWORD_FAILURE:
     payload: action.payload,
   };
 case UPDATE_USER_SUCCESS: {
-  NotifyUser.success('Data Updated Succesfully');
+  NotifyUser.success(I18n.t('notification_dataUpdate'));
   return {...state, loading: false};
 }
 
 case UPDATE_USER_FAILURE:
-  NotifyUser.error(I18n.t('notification-networkerror'));
+  NotifyUser.error(I18n.t('notification_dataError'));
   return {...state, loading: false};
 ////////////////////////////////////////////////////
 
@@ -127,6 +131,22 @@ case CHANGE_PASSWORD_SUCCESS: {
 
 case CHANGE_PASSWORD_FAILURE:
   return {...state, loading: false};
+
+  case USER_INFO:
+         return   {...state,loading:true}
+        case USER_INFO_SUCCESS:{
+          console.log("action.payload",action.payload);
+          
+           AsyncStorage.storeObjectData("profileData",action.payload)
+            //NotifyUser.success(I18n.t('notification_dataUpdate'));
+
+            return { ...state,loading:false,userInfo:action.payload}
+        }
+        case USER_INFO_FAILURE:{
+            NotifyUser.error(I18n.t('notification_dataError'));
+
+            return { ...state,loading:false}
+        }
 
 case AUTH_ERROR:
   return {...state, loading: false, isLoggedIn: false};

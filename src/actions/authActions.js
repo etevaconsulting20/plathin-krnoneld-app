@@ -17,6 +17,9 @@ import {
   UPDATE_USER,
   UPDATE_USER_FAILURE,
   UPDATE_USER_SUCCESS,
+  USER_INFO,
+  USER_INFO_FAILURE,
+  USER_INFO_SUCCESS
 } from './types';
 
 export const checkAuthStatus = () => ({
@@ -118,4 +121,26 @@ export const changePasswordFailure = () => {
     type: CHANGE_PASSWORD_FAILURE,
   };
 };
+
+export const getUserInfo=()=>(
+  {
+      type:USER_INFO,
+  }
+)
+
+export const getUserInfoSuccess=(data)=>(
+  {
+      type:USER_INFO_SUCCESS,
+      payload:data
+      
+  }
+)
+export const getUserInfoFailure=()=>(
+  {
+      type:USER_INFO_FAILURE,
+      
+  }
+)
+
+
 

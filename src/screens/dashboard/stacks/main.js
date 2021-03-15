@@ -6,6 +6,10 @@ import LoadingIndicator from '../../../components/loadingIndicator';
 import {appConfig} from '../../../settings/settings';
 import {Icon, SearchBar} from 'react-native-elements';
 import {filter, includes} from 'lodash';
+import moment, {locales} from 'moment';
+import I18n from 'react-native-i18n';
+
+
 import {
   Container,
   Header,
@@ -23,6 +27,9 @@ class DashboardMainScreen extends Component {
   };
   componentDidMount = () => {
     this.props.getAllFiles();
+    this.props.navigation.addListener('focus', () => {
+      this.props.getAllFiles();
+    })
   };
   viewPdf = (name, id) => {
     this.props.navigation.navigate('dashboard-viewpdf', {id: id, name: name});
@@ -46,6 +53,10 @@ class DashboardMainScreen extends Component {
   };
   render() {
     const {loading, files} = this.props;
+    let sortData=this.props.files && this.props.files;
+    let fileData =sortData.sort(function(a,b){
+      return new Date(b.sharedDate) - new Date(a.sharedDate);
+    });
     return (
       <>
         {/* <LoadingIndicator
@@ -53,7 +64,7 @@ class DashboardMainScreen extends Component {
           message={'fetching files'}></LoadingIndicator> */}
           <SearchBar
                 lightTheme
-                placeholder="Type Here..."
+                placeholder={I18n.t('placeholder_typeHere')}
                 round
                 onChangeText={(text) => this.onSearch(text)}
                 value={this.state.searchText}
@@ -64,8 +75,8 @@ class DashboardMainScreen extends Component {
             <RefreshControl refreshing={loading} onRefresh={this.refreshPage} />
           }>
           <List>
-            {files
-              ? this.getFilteredList(files).map((file, index) => {
+            {fileData
+              ? this.getFilteredList(fileData).map((file, index) => {
                   return (
                     <ListItem
                       key={index}
@@ -77,14 +88,24 @@ class DashboardMainScreen extends Component {
                             color: 'black',
                           }}>
                           {file.name}
+                          <Text
+                          style={{
+                            fontFamily: appConfig.fontFamily,
+                            color: 'grey',
+                          }}>
+                           {`\n ${moment(file.sharedDate).format("DD/MM/YYYY")}`}
                         </Text>
+                        </Text>
+                        
                       </Left>
+                     
                       <Right>
                         <Icon
                           name="download"
                           type="font-awesome"
                           color={appConfig.primaryColor}></Icon>
                       </Right>
+                      
                     </ListItem>
                   );
                 })

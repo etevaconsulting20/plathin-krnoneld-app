@@ -14,7 +14,7 @@ import {
 } from 'native-base';
 import { ListItem, Icon, Avatar, Input, Button } from 'react-native-elements';
 import { appConfig } from '../../../settings/settings';
-import { changeLanguage, update } from '../../../actions/index';
+import { changeLanguage, update,getUserInfo } from '../../../actions/index';
 
 const list = [
   {
@@ -50,11 +50,16 @@ class ProfileMainScreen extends Component {
 
 
   componentDidMount = async () => {
+    this.props.getUserInfo()
     let data = await AsyncStorage.getObjectData('profileData');
-
-
     this.setState({ email: data.email, firstName: data.foreName, lastName: data.sureName, phoneNumber: data.phoneNumber.toString() })
-   
+
+    this.props.navigation.addListener('focus', async() => {
+      this.props.getUserInfo();
+     data = await AsyncStorage.getObjectData('profileData');
+     this.setState({ email: data.email, firstName: data.foreName, lastName: data.sureName, phoneNumber: data.phoneNumber.toString() })
+  
+    })
     // this.props.navigation.setOptions({
     //   headerTitle: I18n.t('settings-editProfile'),
     //   headerTint: 'white',
@@ -69,7 +74,7 @@ class ProfileMainScreen extends Component {
     //     headerShown: false,
     //   });
   };
-  componentWillUnmount() {
+  //componentWillUnmount() {
     // this.props.navigation.dangerouslyGetParent().setOptions({
     //   tabBarVisible: false,
     // });
@@ -79,7 +84,7 @@ class ProfileMainScreen extends Component {
     //   .setOptions({
     //     headerShown: false,
     //   });
-  }
+  //}
   onChangeLanguage = (code) => {
     console.log("code", code);
 
@@ -91,7 +96,7 @@ class ProfileMainScreen extends Component {
   onPhone(event) {
 
     this.setState({ phoneNumber: event.nativeEvent.text,isDisable:false });
-    if (event.nativeEvent.text != '' && event.nativeEvent.text.length === 9) {
+    if (event.nativeEvent.text != '' && event.nativeEvent.text.length === 10) {
       if (isNaN(event.nativeEvent.text)) {
         this.isPhoneNumberValid = false;
       } else {
@@ -151,15 +156,16 @@ class ProfileMainScreen extends Component {
       AsyncStorage.storeObjectData('profileData', data);
 
       this.props.update(model);
+      this.setState({isDisable:true})
 
     }
 
 
   }
  
-  render() {
-
-
+  render () {
+    console.log("UUUUUUUU",this.state);
+    
     return (
       <>
         {/* <Container> */}
@@ -348,7 +354,7 @@ class ProfileMainScreen extends Component {
                   // marginTop: 10,
 
                 }}
-                title="Update"
+                title={I18n.t("btn_update")}
                 onPress={() => this.updateUser()}></Button> 
 
           </View>
@@ -393,5 +399,5 @@ const mapStateTopProps = ({ settings, authUser }) => {
   return { ...settings, ...authUser };
 };
 export default connect(mapStateTopProps, {
-  changeLanguage, update
+  changeLanguage, update,getUserInfo
 })(ProfileMainScreen);

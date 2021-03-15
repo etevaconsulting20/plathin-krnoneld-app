@@ -83,7 +83,7 @@ class LanguageStack extends Component {
   onPhone(event) {
     
     this.setState({phoneNumber: event.nativeEvent.text});
-    if (event.nativeEvent.text != '' && event.nativeEvent.text.length===10) {
+    if (event.nativeEvent.text != '' && event.nativeEvent.text.length===11) {
       if(isNaN(event.nativeEvent.text)){
         this.isPhoneNumberValid = false;
       }else{

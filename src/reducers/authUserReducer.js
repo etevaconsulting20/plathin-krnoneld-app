@@ -135,8 +135,6 @@ case CHANGE_PASSWORD_FAILURE:
   case USER_INFO:
          return   {...state,loading:true}
         case USER_INFO_SUCCESS:{
-          console.log("action.payload",action.payload);
-          
            AsyncStorage.storeObjectData("profileData",action.payload)
             //NotifyUser.success(I18n.t('notification_dataUpdate'));
 

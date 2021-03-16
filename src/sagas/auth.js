@@ -148,8 +148,6 @@ function* updateToFb(model) {
 function* updateUserInfoCall() {
   try {
      let res= yield call(userInfoCall)
-     console.log("calll");
-     
       yield put(getUserInfoSuccess(res.data))
 
   } catch (error) {

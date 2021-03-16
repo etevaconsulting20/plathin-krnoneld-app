@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView ,RefreshControl} from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import { connect } from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -15,7 +15,7 @@ import {
 import { ListItem, Icon, Avatar, Input, Button } from 'react-native-elements';
 import { appConfig } from '../../../settings/settings';
 import { changeLanguage, update,getUserInfo } from '../../../actions/index';
-
+let flag=true;
 const list = [
   {
     name: 'English',
@@ -50,12 +50,18 @@ class ProfileMainScreen extends Component {
 
 
   componentDidMount = async () => {
+    flag=true;
+    console.log("1");
+    
     this.props.getUserInfo()
     let data = await AsyncStorage.getObjectData('profileData');
     this.setState({ email: data.email, firstName: data.foreName, lastName: data.sureName, phoneNumber: data.phoneNumber.toString() })
 
     this.props.navigation.addListener('focus', async() => {
-      this.props.getUserInfo();
+    console.log("2");
+
+    flag=true;
+     this.props.getUserInfo();
      data = await AsyncStorage.getObjectData('profileData');
      this.setState({ email: data.email, firstName: data.foreName, lastName: data.sureName, phoneNumber: data.phoneNumber.toString() })
   
@@ -85,6 +91,20 @@ class ProfileMainScreen extends Component {
     //     headerShown: false,
     //   });
   //}
+  componentDidUpdate(prevProps, prevState) {
+    if (flag && this.props.userInfo!==null && prevState.userInfo !==this.props.userInfo) {
+      flag=false;
+      let data=this.props.userInfo;
+      console.log("data",data);
+      
+      this.setState({ email: data.email, firstName: data.foreName, lastName: data.sureName, phoneNumber: data.phoneNumber.toString() })
+  
+      console.log('pokemons state has changed.')
+    }
+  }
+  refreshPage = () => {
+    this.props.getUserInfo()
+  };
   onChangeLanguage = (code) => {
     console.log("code", code);
 
@@ -164,12 +184,13 @@ class ProfileMainScreen extends Component {
   }
  
   render () {
-    console.log("UUUUUUUU",this.state);
     
     return (
       <>
         {/* <Container> */}
-        <ScrollView style={{ flexDirection:'row'}}>
+        <ScrollView  style={{ flexDirection:'row'}} refreshControl={
+            <RefreshControl refreshing={this.props.loading} onRefresh={this.refreshPage} />
+        }>
           {/* AboutYouCard */}
           <Card style={style.AboutUsCard}>
             <View style={{ marginLeft: 230 }}>

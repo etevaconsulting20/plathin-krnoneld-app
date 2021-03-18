@@ -6,12 +6,19 @@ import {_styles} from '../../util/helpers/styles';
 import NotificationMainScreen from './stacks/main';
 import Details from './stacks/details';
 import {appConfig} from '../../settings/settings';
+import {TransitionSpecs} from '@react-navigation/stack';
+import {HeaderStyleInterpolators} from '@react-navigation/stack';
 
 const NotificatioStack = createStackNavigator();
 
 const stackScreenOptions = {
   headerStyle: {backgroundColor: appConfig.primaryColor},
   headerTintColor: appConfig.secondaryColor,
+  headerStyleInterpolator: HeaderStyleInterpolators.forFade,
+  transitionSpec: {
+    open: TransitionSpecs.FadeOutToBottomAndroidSpec,
+    close: TransitionSpecs.ScaleFromCenterAndroidSpec,
+  },
 };
 
 const NotificationsScreen = () => {

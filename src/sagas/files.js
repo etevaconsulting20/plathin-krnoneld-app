@@ -75,6 +75,7 @@ function* downloadFilefromServer() {
     let files = yield select(user);
 
     let id = files.fileId;
+    console.log('sags', id);
     let name = files.fileName;
     const response = yield call(downloadfilesCall, id);
     let res = yield blobToBase64(response.data);

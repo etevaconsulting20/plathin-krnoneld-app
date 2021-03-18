@@ -45,7 +45,7 @@ export default (state = initState, action) => {
     case DOWNLOAD_FILE_SUCCESS:
       return {...state, loading: false, fileBase64: action.payload};
     case DOWNLOAD_FILE_FAILURE:
-      return {...state, loading: false};
+      return {...state, loading: false, fileBase64: null};
     default:
       return {...state};
   }

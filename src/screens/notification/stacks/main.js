@@ -10,7 +10,10 @@ import {
   Image,
   RefreshControl
 } from 'react-native';
-import {getAllNotifications,getAllSeenNotifications} from "../../../actions/index"
+import {
+  getAllNotifications,
+  getAllSeenNotifications,
+} from '../../../actions/index';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import moment, {locales} from 'moment';
 
@@ -24,7 +27,6 @@ const Item = ({data}) => {
  let date= moment(data.createdDate._seconds * 1000).format("DD/MM/YYYY")
 
   return (
-    
     <View style={styles.item}>
     
       <Text numberOfLines={1}  style={{fontSize: size,color:"#000",fontWeight:weight,width:200,marginTop:-10}}> <Icon name="comments-o" size={25} color="#900" />   {data.title}</Text>
@@ -36,13 +38,9 @@ const Item = ({data}) => {
 };
 
 class PureItem extends PureComponent {
-
-
-  
   render() {
     return (
-   
-      <TouchableOpacity onPress={()=>this.props.toDetails(this.props.item)}>
+      <TouchableOpacity onPress={() => this.props.toDetails(this.props.item)}>
         <Item data={this.props.item} />
       </TouchableOpacity>
      
@@ -53,19 +51,21 @@ class PureItem extends PureComponent {
 
 class NotificationsMainScreen extends Component {
   componentDidMount = () => {
-    this.props.getAllNotifications()
+    this.props.getAllNotifications();
     this.props.navigation.addListener('focus', () => {
       this.props.navigation
-      .dangerouslyGetParent()
-      .dangerouslyGetParent()
-      .setOptions({
-        headerShown: true,
-      });
+        .dangerouslyGetParent()
+        .dangerouslyGetParent()
+        .setOptions({
+          cardOverlayEnabled: false,
+          headerTitle: 'PLATHIN & KRONELD',
+          headerTint: 'white',
+          headerTitleStyle: {marginHorizontal: 0, fontSize: 18},
+          headerLeft: null,
+        });
       this.props.getAllNotifications();
-      console.log("added");
-      
+      console.log('added');
     });
-
   };
  
   refreshPage = () => {
@@ -73,7 +73,7 @@ class NotificationsMainScreen extends Component {
   };
   getItem = (data,i) => {
     return {
-      ...data[i]
+      ...data[i],
     };
   };
   getItemCount = (data) => {
@@ -81,14 +81,17 @@ class NotificationsMainScreen extends Component {
   };
 
   toDetails = (data) => {
-    this.props.getAllSeenNotifications(data.id)
-    this.props.navigation.push('dashboard-details',{data});
+    this.props.getAllSeenNotifications(data.id);
+    this.props.navigation.push('dashboard-details', {data});
   };
 
   render() {
-    let sortData=this.props.notification && this.props.notification;
-    let notification =sortData.sort(function(a,b){
-      return new Date(b.createdDate._seconds * 1000) - new Date(a.createdDate._seconds * 1000);
+    let sortData = this.props.notification && this.props.notification;
+    let notification = sortData.sort(function (a, b) {
+      return (
+        new Date(b.createdDate._seconds * 1000) -
+        new Date(a.createdDate._seconds * 1000)
+      );
     });
     return (
       
@@ -104,7 +107,12 @@ class NotificationsMainScreen extends Component {
             onRefresh={this.refreshPage}
           />}
           renderItem={({item}) => {
-            return <PureItem toDetails={(item)=>this.toDetails(item)} item={item} />;
+            return (
+              <PureItem
+                toDetails={(item) => this.toDetails(item)}
+                item={item}
+              />
+            );
           }}
           // onScroll={() => console.log('onscroll')}
           // onMomentumScrollBegin={() => console.log('onscrollmomentum')}
@@ -130,11 +138,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     padding: 20,
   },
-  
 });
 const mapStateToProps = ({notification}) => {
   return notification;
 };
 export default connect(mapStateToProps, {
-  getAllNotifications,getAllSeenNotifications
+  getAllNotifications,
+  getAllSeenNotifications,
 })(NotificationsMainScreen);

@@ -6,12 +6,21 @@ import {_styles} from '../../util/helpers/styles';
 import DashboardMainScreen from './stacks/main';
 import ViewPdfScreen from './stacks/viewPdf';
 import {appConfig} from '../../settings/settings';
+import {TransitionSpecs} from '@react-navigation/stack';
 
 const DashboardStack = createStackNavigator();
 
 const stackScreenOptions = {
   headerStyle: {backgroundColor: appConfig.primaryColor},
   headerTintColor: appConfig.secondaryColor,
+  gestureEnabled: true,
+  gestureDirection: 'horizontal',
+  transitionSpec: {
+    open: TransitionSpecs.TransitionIOSSpec,
+    close: TransitionSpecs.TransitionIOSSpec,
+  },
+  // headerMode: 'float',
+  // animation: 'fade',
 };
 
 const DashboardScreen = () => {

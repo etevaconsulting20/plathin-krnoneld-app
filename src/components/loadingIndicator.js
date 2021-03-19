@@ -5,35 +5,61 @@ import {Bubbles, DoubleBounce, Bars, Pulse} from 'react-native-loader';
 import {appConfig} from '../settings/settings';
 
 export default ({isVissible, color, message}) => {
+  // return (
+  //   <Overlay
+  //     style={{zIndex: 2}}
+  //     isVisible={isVissible}
+  //     overlayStyle={{backgroundColor: 'transparent', elevation: 0, zIndex: 0}}
+  //     backdropStyle={{backgroundColor: 'rgba(0, 0, 0, 0.9)', zIndex: 0}}
+  //     width="auto"
+  //     height="auto">
+  //     <>
+  //       <View style={{paddingBottom: 10}}>
+  //         <Bubbles size={10} color={appConfig.primaryColor} />
+  //       </View>
+  //       <Text
+  //         style={{
+  //           color: appConfig.primaryColor,
+  //           fontFamily: appConfig.fontFamily,
+  //           fontSize: 16,
+  //         }}>
+  //         {message}
+  //       </Text>
+  //     </>
+  //   </Overlay>
+  // );
+
   return (
-    <Overlay
-      style={{zIndex: 2}}
-      isVisible={isVissible}
-      overlayStyle={{backgroundColor: 'transparent', elevation: 0, zIndex: 0}}
-      backdropStyle={{backgroundColor: 'rgba(0, 0, 0, 0.9)', zIndex: 0}}
-      width="auto"
-      height="auto">
-      <>
-        <View style={{paddingBottom: 10}}>
-          <Bubbles size={10} color={appConfig.primaryColor} />
-        </View>
-        {/* <Image
-          source={{uri: 'http://www.clicktorelease.com/code/gif/1.gif'}}
-          style={{width: 100, height: 100}}
-        /> */}
-        {/* <ActivityIndicator
-          style={{padding: 10}}
-          size="large"
-          color={color}></ActivityIndicator> */}
-        <Text
+    <>
+      {isVissible ? (
+        <View
           style={{
-            color: appConfig.primaryColor,
-            fontFamily: appConfig.fontFamily,
-            fontSize: 16,
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            backgroundColor: 'white',
+            left: 0,
+            right: 0,
+            justifyContent: 'center',
+            alignContent: 'center',
+            zIndex: 3,
+            alignItems: 'center',
           }}>
-          Loading...
-        </Text>
-      </>
-    </Overlay>
+          <>
+            <View style={{paddingBottom: 10}}>
+              <Bubbles size={10} color={appConfig.primaryColor} />
+            </View>
+            <Text
+              style={{
+                color: appConfig.primaryColor,
+                fontFamily: appConfig.fontFamily,
+                fontSize: 16,
+              }}>
+              {message}
+            </Text>
+          </>
+        </View>
+      ) : null}
+    </>
   );
 };

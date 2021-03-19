@@ -7,7 +7,8 @@ import {
   VirtualizedList,
   SafeAreaView,
   StyleSheet,
-  BackHandler,TouchableOpacity
+  BackHandler,
+  TouchableOpacity,
 } from 'react-native';
 import {HeaderBackButton} from '@react-navigation/stack';
 import {appConfig} from '../../settings/settings';
@@ -16,22 +17,42 @@ import moment, {locales} from 'moment';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-
 class NotificationsMainScreen extends Component {
- componentDidMount=()=>{
-    this.props.navigation.setOptions({
-      headerShown: true,
-      cardOverlayEnabled: false,
-      headerTitle: "PLATHIN & KRONELD",
-      headerTint: 'white',
-      headerTitleStyle: {marginHorizontal:-10, fontSize: 18},
-      headerLeft: () => (
-        <HeaderBackButton
-          tintColor={'white'}
-          onPress={this.onBackPress}></HeaderBackButton>
-      ),
-      
+  componentDidMount = () => {
+    // this.props.navigation.setOptions({
+    //   headerShown: true,
+    //   cardOverlayEnabled: false,
+    //   headerTitle: 'PLATHIN & KRONELD',
+    //   headerTint: 'white',
+    //   headerTitleStyle: {marginHorizontal: -10, fontSize: 18},
+    //   headerLeft: () => (
+    //     <HeaderBackButton
+    //       tintColor={'white'}
+    //       onPress={this.onBackPress}></HeaderBackButton>
+    //   ),
+    // });
+    this.props.navigation.dangerouslyGetParent().setOptions({
+      tabBarVisible: false,
     });
+    this.props.navigation
+      .dangerouslyGetParent()
+      .dangerouslyGetParent()
+      .setOptions({
+        cardOverlayEnabled: false,
+        headerTitle: 'PLATHIN & KRONELD',
+        headerTint: 'white',
+        headerTitleStyle: {marginHorizontal: -10, fontSize: 18},
+        headerLeft: () => (
+          <HeaderBackButton
+            tintColor={'white'}
+            onPress={this.onBackPress}></HeaderBackButton>
+        ),
+      });
+
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+  };
+
+  componentWillUnmount() {
     this.props.navigation.dangerouslyGetParent().setOptions({
       tabBarVisible: true,
     });
@@ -39,34 +60,18 @@ class NotificationsMainScreen extends Component {
       .dangerouslyGetParent()
       .dangerouslyGetParent()
       .setOptions({
-        headerShown: false,
+        headerShown: true,
       });
-
-    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
-
- }
-
- componentWillUnmount() {
-  this.props.navigation.dangerouslyGetParent().setOptions({
-    tabBarVisible: true,
-  });
-  this.props.navigation
-    .dangerouslyGetParent()
-    .dangerouslyGetParent()
-    .setOptions({
-      headerShown: true,
-    });
-  BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
-}
-onBackPress = () => {
-  this.props.navigation.push('dashboard-main');
-
-};
-deleteNotification =(id)=>{
-
-this.props.getDeleteNotification(id);
-this.props.navigation.push('dashboard-main');
-}
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+  }
+  onBackPress = () => {
+    this.props.navigation.pop();
+    return true;
+  };
+  deleteNotification = (id) => {
+    this.props.getDeleteNotification(id);
+    this.props.navigation.push('dashboard-main');
+  };
 
   render() {
     const {data}=this.props.route.params;
@@ -95,7 +100,7 @@ this.props.navigation.push('dashboard-main');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding:20
+    padding: 20,
   },
   item: {
     backgroundColor: 'red',
@@ -113,6 +118,5 @@ const mapStateToProps = ({notification}) => {
   return notification;
 };
 export default connect(mapStateToProps, {
-  getDeleteNotification
+  getDeleteNotification,
 })(NotificationsMainScreen);
-

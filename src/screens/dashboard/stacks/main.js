@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { View, ScrollView, RefreshControl } from 'react-native';
-import { connect } from 'react-redux';
-import { getAllFiles } from '../../../actions/index';
+
+import React, {Component} from 'react';
+import {View, ScrollView, RefreshControl, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
+import {getAllFiles} from '../../../actions/index';
 import LoadingIndicator from '../../../components/loadingIndicator';
 import { appConfig } from '../../../settings/settings';
 import { Icon, SearchBar } from 'react-native-elements';
@@ -22,6 +23,11 @@ import {
   Left,
   Right,
 } from 'native-base';
+const openModal = () => {
+  props.navigation.navigate('modal', {
+    type: 'delete-confirmation',
+  });
+};
 
 class DashboardMainScreen extends Component {
   state = {
@@ -35,7 +41,39 @@ class DashboardMainScreen extends Component {
     this.props.navigation.addListener('focus', () => {
       this.props.getAllFiles();
       this.setState({flag:false})
-    })
+      this.props.navigation
+        .dangerouslyGetParent()
+        .dangerouslyGetParent()
+        .setOptions({
+          cardOverlayEnabled: false,
+          headerTitle: 'PLATHIN & KRONELD',
+          headerTint: 'white',
+          headerTitleStyle: {marginHorizontal: 0, fontSize: 18},
+          headerLeft: null,
+          headerRight: () => (
+            <View
+              style={{
+                marginRight: 10,
+                display: 'flex',
+                flexDirection: 'row',
+                width: 40,
+                justifyContent: 'space-between',
+              }}>
+              {/* <TouchableOpacity onPress={openModal}>
+                <Icon name="user" type="font-awesome" color="white"></Icon>
+                <Text style={style.textBold}>{I18n.t('settings-signout')}</Text>
+              </TouchableOpacity> */}
+              <TouchableOpacity onPress={openModal}>
+                <Icon name="sign-out" type="font-awesome" color="white"></Icon>
+                {/* <Text style={style.textBold}>{I18n.t('settings-signout')}</Text> */}
+              </TouchableOpacity>
+
+              {/* <Icon size={30} type="font-awesome" name="sign-out" onPress={openModal} /> */}
+            </View>
+          ),
+        });
+      this.props.getAllFiles();
+    });
   };
   viewPdf = (name, id) => {
     this.props.navigation.navigate('dashboard-viewpdf', { id: id, name: name });

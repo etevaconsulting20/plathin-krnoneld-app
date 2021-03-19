@@ -9,13 +9,18 @@ import FlashMessage from 'react-native-flash-message';
 import LoginScreen from '../screens/login';
 import LogoScreen from '../screens/logoScreen';
 import ForgotScreen from '../screens/forgotPassword';
-import ChangePwdScreen from "../screens/changePassword"
+import ChangePwdScreen from '../screens/changePassword';
 import LogoutScreen from '../screens/logout';
 import ModalScreen from '../screens/modal';
 import MainApp from '../containers/mainAppContainer';
 import LogoTitle from '../components/logoTitle';
 import LoadingIndicator from '../components/loadingIndicator';
-import {getSettings, checkAuthStatus, getAllFiles,getAllNotifications} from '../actions/index';
+import {
+  getSettings,
+  checkAuthStatus,
+  getAllFiles,
+  getAllNotifications,
+} from '../actions/index';
 import moment, {locales} from 'moment';
 import {AsyncStorage} from '../util/helpers/helpers';
 import axios from 'axios';
@@ -84,11 +89,11 @@ function RootNavigationContainer(props) {
       />
       <NavigationContainer>
         <StackNavigator.Navigator>
-        <StackNavigator.Screen
+          <StackNavigator.Screen
             name="login"
             component={isLoggedIn ? LogoScreen : LoginScreen}
             options={{headerShown: false}}></StackNavigator.Screen>
-             <StackNavigator.Screen
+          <StackNavigator.Screen
             name="logoScreen"
             component={LogoScreen}
             options={{headerShown: false}}></StackNavigator.Screen>
@@ -96,11 +101,11 @@ function RootNavigationContainer(props) {
             name="mainApp"
             component={MainApp}
             options={mainAppHeaderOptions}></StackNavigator.Screen>
-            <StackNavigator.Screen
+          <StackNavigator.Screen
             name="forgotPassword"
             component={ForgotScreen}
             options={{headerShown: false}}></StackNavigator.Screen>
-             <StackNavigator.Screen
+          <StackNavigator.Screen
             name="auth/change-password"
             component={ChangePwdScreen}
             options={{headerShown: false}}></StackNavigator.Screen>
@@ -123,13 +128,13 @@ function RootNavigationContainer(props) {
   );
 }
 
-const mapStateToProps = ({authUser, settings, files,notification}) => {
-  return {...authUser, ...settings, ...files,...notification};
+const mapStateToProps = ({authUser, settings, files, notification}) => {
+  return {...authUser, ...settings, ...files, ...notification};
 };
 
 export default connect(mapStateToProps, {
   checkAuthStatus,
   getSettings,
   getAllFiles,
-  getAllNotifications
+  getAllNotifications,
 })(RootNavigationContainer);

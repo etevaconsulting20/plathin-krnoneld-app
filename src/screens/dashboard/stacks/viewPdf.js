@@ -16,43 +16,46 @@ class ViewPdfScreen extends Component {
   };
   componentDidMount = () => {
     let id = this.props.route.params.id;
+    console.log(id);
     let name = this.props.route.params.name;
-    
-    this.props.navigation.setOptions({
-      headerShown: true,
-      cardOverlayEnabled: false,
-      headerTitle: name,
-      headerTint: 'white',
-      headerTitleStyle: {fontFamily: appConfig.fontFamily, fontSize: 18},
-      headerLeft: () => (
-        <HeaderBackButton
-          tintColor={'white'}
-          onPress={this.onBackPress}></HeaderBackButton>
-      ),
-      headerRight: () => (
-        <View
-          style={{
-            marginRight: 10,
-            display: 'flex',
-            flexDirection: 'row',
-            width: 40,
-            justifyContent: 'space-between',
-          }}>
-          <TouchableOpacity onPress={this.sharePdf}>
-            <Icon name="share-alt" type="font-awesome" color="white"></Icon>
-          </TouchableOpacity>
-        </View>
-      ),
-    });
-    this.props.navigation.dangerouslyGetParent().setOptions({
-      tabBarVisible: false,
-    });
     this.props.navigation
       .dangerouslyGetParent()
       .dangerouslyGetParent()
       .setOptions({
-        headerShown: false,
+        headerShown: true,
+        cardOverlayEnabled: false,
+        headerTitle: name,
+        headerTint: 'white',
+        headerTitleStyle: {fontFamily: appConfig.fontFamily, fontSize: 18},
+        headerLeft: () => (
+          <HeaderBackButton
+            tintColor={'white'}
+            onPress={this.onBackPress}></HeaderBackButton>
+        ),
+        headerRight: () => (
+          <View
+            style={{
+              marginRight: 10,
+              display: 'flex',
+              flexDirection: 'row',
+              width: 40,
+              justifyContent: 'space-between',
+            }}>
+            <TouchableOpacity onPress={this.sharePdf}>
+              <Icon name="share-alt" type="font-awesome" color="white"></Icon>
+            </TouchableOpacity>
+          </View>
+        ),
       });
+    this.props.navigation.dangerouslyGetParent().setOptions({
+      tabBarVisible: false,
+    });
+    // this.props.navigation
+    //   .dangerouslyGetParent()
+    //   .dangerouslyGetParent()
+    //   .setOptions({
+    //     headerShown: false,
+    //   });
 
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
 

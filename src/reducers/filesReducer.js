@@ -35,7 +35,7 @@ export default (state = initState, action) => {
       let error = action.payload;
       return {...state, loading: false};
     case DOWNLOAD_FILE: {
-  NotifyUser.error(I18n.t('notification_dataError'));
+ // NotifyUser.error(I18n.t('notification_dataError'));
 
       return {
         ...state,

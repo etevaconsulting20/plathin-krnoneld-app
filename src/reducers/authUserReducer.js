@@ -97,10 +97,12 @@ case FORGOT_PAASWORD:
     email: action.payload,
   };
 case FORGOT_PAASWORD_SUCCESS: {
+  NotifyUser.success(I18n.t('notification_forgot'));
   return {...state, loading: false, isLoggedIn: false};
 }
 
 case FORGOT_PAASWORD_FAILURE:
+  NotifyUser.error(I18n.t('notification_dataError'));
   return {...state, loading: false};
 
   case UPDATE_USER:

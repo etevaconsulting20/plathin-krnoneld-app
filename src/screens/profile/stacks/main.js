@@ -163,8 +163,8 @@ class ProfileMainScreen extends Component {
     if (this.isfisrtNameValid && this.isPhoneNumberValid && this.isLastNameValid) {
       let model = {
         phoneNumber: this.state.phoneNumber,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName
+        foreName: this.state.firstName,
+        sureName: this.state.lastName
       };
       let data = {
         phoneNumber: this.state.phoneNumber,
@@ -188,21 +188,12 @@ class ProfileMainScreen extends Component {
     return (
       <>
         {/* <Container> */}
-        <ScrollView  style={{ flexDirection:'row'}} refreshControl={
+        <ScrollView  style={{ flexDirection:'row',backgroundColor:"#fff"}} refreshControl={
             <RefreshControl refreshing={this.props.loading} onRefresh={this.refreshPage} />
         }>
           {/* AboutYouCard */}
-          <Card style={style.AboutUsCard}>
-            <View style={{ marginLeft: 230 }}>
-              <Picker
-                selectedValue={this.state.selectedValue}
-                style={{ height: 50, width: 120 }}
-                onValueChange={(itemValue, itemIndex) => this.onChangeLanguage(itemValue)}
-              >
-                <Picker.Item value="en" label="English" />
-                <Picker.Item value="fi" label="Finnish" />
-              </Picker>
-            </View>
+          {/* <Card style={style.AboutUsCard}>
+            
             <View collapsable={false} style={{ marginLeft: 127, marginTop: -40 ,width:200}}>
 
               <Avatar
@@ -213,7 +204,17 @@ class ProfileMainScreen extends Component {
               />
 
             </View>
-          </Card>
+          </Card> */}
+          <View style={{ marginLeft: 230 }}>
+              <Picker
+                selectedValue={this.state.selectedValue}
+                style={{ height: 50, width: 110 }}
+                onValueChange={(itemValue, itemIndex) => this.onChangeLanguage(itemValue)}
+              >
+                <Picker.Item value="en" label="English" />
+                <Picker.Item value="fi" label="Finnish" />
+              </Picker>
+            </View>
           <Input
             style={{
               fontFamily: appConfig.fontFamily,

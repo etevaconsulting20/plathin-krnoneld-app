@@ -7,7 +7,8 @@ import {
   VirtualizedList,
   SafeAreaView,
   StyleSheet,
-  Image
+  Image,
+  RefreshControl
 } from 'react-native';
 import {getAllNotifications,getAllSeenNotifications} from "../../../actions/index"
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -40,9 +41,12 @@ class PureItem extends PureComponent {
   
   render() {
     return (
+   
       <TouchableOpacity onPress={()=>this.props.toDetails(this.props.item)}>
         <Item data={this.props.item} />
       </TouchableOpacity>
+     
+
     );
   }
 }
@@ -64,6 +68,9 @@ class NotificationsMainScreen extends Component {
 
   };
  
+  refreshPage = () => {
+    this.props.getAllNotifications();
+  };
   getItem = (data,i) => {
     return {
       ...data[i]
@@ -84,12 +91,18 @@ class NotificationsMainScreen extends Component {
       return new Date(b.createdDate._seconds * 1000) - new Date(a.createdDate._seconds * 1000);
     });
     return (
-      <SafeAreaView style={styles.container}>
+      
+
+      <SafeAreaView style={styles.container}   >
         <VirtualizedList
           data={notification}
           // removeClippedSubviews={true}
           windowSize={21}
           //initialNumToRender={4}
+          refreshControl={<RefreshControl
+            refreshing={this.props.loading}
+            onRefresh={this.refreshPage}
+          />}
           renderItem={({item}) => {
             return <PureItem toDetails={(item)=>this.toDetails(item)} item={item} />;
           }}

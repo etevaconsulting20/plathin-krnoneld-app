@@ -5,6 +5,8 @@ import { getAllFiles } from '../../../actions/index';
 import LoadingIndicator from '../../../components/loadingIndicator';
 import { appConfig } from '../../../settings/settings';
 import { Icon, SearchBar } from 'react-native-elements';
+import Folder from 'react-native-vector-icons/Entypo';
+import PDF from 'react-native-vector-icons/FontAwesome';
 import { filter, includes } from 'lodash';
 import moment, { locales } from 'moment';
 import I18n from 'react-native-i18n';
@@ -32,6 +34,7 @@ class DashboardMainScreen extends Component {
     this.props.getAllFiles();
     this.props.navigation.addListener('focus', () => {
       this.props.getAllFiles();
+      this.setState({flag:false})
     })
   };
   viewPdf = (name, id) => {
@@ -44,12 +47,13 @@ class DashboardMainScreen extends Component {
     this.setState({ searchText: text });
   };
   getFilteredList = (list) => {
+    
     let searchText = this.state.searchText;
     if (searchText == '') {
       return list;
     }
     let result = filter(list, (itm) => {
-      return includes((itm.name).toLowerCase(), searchText.toLowerCase());
+      return includes((itm).toLowerCase(), searchText.toLowerCase());
     });
 
     return result;
@@ -94,17 +98,21 @@ class DashboardMainScreen extends Component {
             <RefreshControl refreshing={loading} onRefresh={this.refreshPage} />
           }>
           <List>
-            {uniqueNames.map((name, key) => {
+            {uniqueNames
+              ? this.getFilteredList(uniqueNames).map((name, key) => {
               return (
+                <View key={key}>
                 <ListItem
-                  key={key}
                   onPress={()=>this.openFiles(name,key)}
                 >
                   <Left>
+                  <Folder name="folder" size={25} color={appConfig.primaryColor} />
                     <Text
                       style={{
                         fontFamily: appConfig.fontFamily,
                         color: 'black',
+                        fontWeight:'bold',
+                        marginLeft:10
                       }}>
                       {name}
                      
@@ -121,20 +129,21 @@ class DashboardMainScreen extends Component {
                  
                  
                 </ListItem>
-                )
-            })}
-             {/* {this.state.flag && this.state.openId ===key ? */}
-                  <List>
+              
+                {this.state.flag && this.state.openId ===key ? 
+               <List>
             {this.state.filterArray.map((file, index) => {
                 return (
                   <ListItem
                     key={index}
                     onPress={() => this.viewPdf(file.name, file.id)}>
                     <Left>
+                  <PDF name="file-pdf-o" size={25} color="grey" />
                       <Text
                         style={{
                           fontFamily: appConfig.fontFamily,
                           color: 'black',
+                          marginLeft:10
                         }}>
                         {file.name}
                         <Text
@@ -160,6 +169,11 @@ class DashboardMainScreen extends Component {
               })}
               
           </List>
+            :null}
+               </View> 
+               )
+            }) :null}
+         
           </List>
           
         </ScrollView>

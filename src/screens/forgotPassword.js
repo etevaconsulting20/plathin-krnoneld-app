@@ -118,10 +118,11 @@ class ForgotScreen extends Component {
           key="get-pin-btn-key"
           titleStyle={{fontFamily: appConfig.fontFamily}}
           buttonStyle={{
-            backgroundColor: "#ddd",
+            backgroundColor: "#cccccc",
             padding: 10,
             width: 100,
             marginTop: 10,
+            color:"#666666"
           }}
           title={I18n.t('logout-cancel')}
           onPress={() => this.gotToLogin()}></Button>

@@ -59,8 +59,8 @@ class NotificationsMainScreen extends Component {
   BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
 }
 onBackPress = () => {
-  this.props.navigation.pop();
-  return true;
+  this.props.navigation.push('dashboard-main');
+
 };
 deleteNotification =(id)=>{
 

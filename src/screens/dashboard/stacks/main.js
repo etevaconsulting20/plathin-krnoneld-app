@@ -23,11 +23,7 @@ import {
   Left,
   Right,
 } from 'native-base';
-const openModal = () => {
-  props.navigation.navigate('modal', {
-    type: 'delete-confirmation',
-  });
-};
+
 
 class DashboardMainScreen extends Component {
   state = {
@@ -63,7 +59,7 @@ class DashboardMainScreen extends Component {
                 <Icon name="user" type="font-awesome" color="white"></Icon>
                 <Text style={style.textBold}>{I18n.t('settings-signout')}</Text>
               </TouchableOpacity> */}
-              <TouchableOpacity onPress={openModal}>
+              <TouchableOpacity onPress={this.openModal}>
                 <Icon name="sign-out" type="font-awesome" color="white"></Icon>
                 {/* <Text style={style.textBold}>{I18n.t('settings-signout')}</Text> */}
               </TouchableOpacity>
@@ -73,6 +69,12 @@ class DashboardMainScreen extends Component {
           ),
         });
       this.props.getAllFiles();
+    });
+  };
+  openModal = () => {
+    
+    this.props.navigation.navigate('modal', {
+      type: 'delete-confirmation',
     });
   };
   viewPdf = (name, id) => {

@@ -70,7 +70,7 @@ class NotificationsMainScreen extends Component {
   };
   deleteNotification = (id) => {
     this.props.getDeleteNotification(id);
-    this.props.navigation.push('dashboard-main');
+    this.props.navigation.push('notification-main');
   };
 
   render() {

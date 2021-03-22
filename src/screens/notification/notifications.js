@@ -26,12 +26,12 @@ const NotificationsScreen = () => {
     <>
       <NotificatioStack.Navigator screenOptions={stackScreenOptions}>
         <NotificatioStack.Screen
-          name={'dashboard-main'}
+          name={'notification-main'}
           options={{headerShown: false}}>
           {(props) => <NotificationMainScreen {...props} />}
         </NotificatioStack.Screen>
         <NotificatioStack.Screen
-          name={'dashboard-details'}
+          name={'notification-details'}
           options={{headerShown: false}}>
           {(props) => <Details {...props} />}
         </NotificatioStack.Screen>

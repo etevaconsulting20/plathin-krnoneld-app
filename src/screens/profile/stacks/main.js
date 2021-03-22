@@ -205,14 +205,15 @@ class ProfileMainScreen extends Component {
 
             </View>
           </Card> */}
-          <View style={{ marginLeft: 230 }}>
+          <View style={{ marginHorizontal: 220 }}>
               <Picker
                 selectedValue={this.state.selectedValue}
-                style={{ height: 50, width: 110 }}
+                style={{ height: 50, width: 140 }}
                 onValueChange={(itemValue, itemIndex) => this.onChangeLanguage(itemValue)}
               >
-                <Picker.Item value="en" label="English" />
-                <Picker.Item value="fi" label="Finnish" />
+                
+                <Picker.Item value="en" label="🇺🇸  English" />
+                <Picker.Item value="fi" label="🇫🇮   Finnish" />
               </Picker>
             </View>
           <Input

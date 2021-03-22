@@ -90,9 +90,11 @@ const userInfoCall=async()=>{
  
   return result
 }
-function* loginUserToFb(model) {
+function* loginUserToFb() {
+  let files = yield select(user);
+
   try {
-   const response = yield call(loginUserCall, model.payload);
+   const response = yield call(loginUserCall, files.payload);
     yield delay(2000);
     yield put(loginUserSuccess(response.data));
   } catch (error) {
@@ -131,16 +133,10 @@ function* changepwdToFb(model) {
 }
 function* updateToFb(model) {
   try {
-    console.log("resssaass8888",model);
-
      let res= yield call(updateCall,model.payload)
-     console.log("res8888",res);
-     
       yield put(updateSuccess())
 
   } catch (error) {
-    console.log("errrrrrrrrr",error);
-    
       yield put(updateFailure())
   }
 
@@ -151,8 +147,6 @@ function* updateUserInfoCall() {
       yield put(getUserInfoSuccess(res.data))
 
   } catch (error) {
-    console.log("errrrrrrrrr",error);
-    
       yield put(getUserInfoFailure())
   }
 

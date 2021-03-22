@@ -25,7 +25,7 @@ class App extends Component {
     // this.checkPermission();
     // Register all listener for notification
     // this.createNotificationListeners();
-    // SplashScreen.hide()
+     SplashScreen.hide()
     // LogBox.ignoreAllLogs();
   }
   componentDidMount = () => {

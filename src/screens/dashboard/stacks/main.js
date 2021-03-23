@@ -1,17 +1,15 @@
-
 import React, {Component} from 'react';
 import {View, ScrollView, RefreshControl, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import {getAllFiles} from '../../../actions/index';
 import LoadingIndicator from '../../../components/loadingIndicator';
-import { appConfig } from '../../../settings/settings';
-import { Icon, SearchBar } from 'react-native-elements';
+import {appConfig} from '../../../settings/settings';
+import {Icon, SearchBar} from 'react-native-elements';
 import Folder from 'react-native-vector-icons/Entypo';
 import PDF from 'react-native-vector-icons/FontAwesome';
-import { filter, includes } from 'lodash';
-import moment, { locales } from 'moment';
+import {filter, includes} from 'lodash';
+import moment, {locales} from 'moment';
 import I18n from 'react-native-i18n';
-
 
 import {
   Container,
@@ -24,19 +22,18 @@ import {
   Right,
 } from 'native-base';
 
-
 class DashboardMainScreen extends Component {
   state = {
     searchText: '',
-    flag:false,
-    filterArray:[],
-    openId:''
+    flag: false,
+    filterArray: [],
+    openId: '',
   };
   componentDidMount = () => {
     this.props.getAllFiles();
     this.props.navigation.addListener('focus', () => {
       this.props.getAllFiles();
-      this.setState({flag:false})
+      this.setState({flag: false});
       this.props.navigation
         .dangerouslyGetParent()
         .dangerouslyGetParent()
@@ -72,54 +69,52 @@ class DashboardMainScreen extends Component {
     });
   };
   openModal = () => {
-    
     this.props.navigation.navigate('modal', {
       type: 'delete-confirmation',
     });
   };
   viewPdf = (name, id) => {
-    this.props.navigation.navigate('dashboard-viewpdf', { id: id, name: name });
+    this.props.navigation.navigate('dashboard-viewpdf', {id: id, name: name});
   };
   refreshPage = () => {
     this.props.getAllFiles();
   };
   onSearch = (text) => {
-    this.setState({ searchText: text });
+    this.setState({searchText: text});
   };
   getFilteredList = (list) => {
-    
     let searchText = this.state.searchText;
     if (searchText == '') {
       return list;
     }
     let result = filter(list, (itm) => {
-      return includes((itm).toLowerCase(), searchText.toLowerCase());
+      return includes(itm.toLowerCase(), searchText.toLowerCase());
     });
 
     return result;
   };
-  openFiles=(name,id)=>{
-    const largeGroup = this.props.files&& this.props.files.filter(activity => (
-      activity.folderName ===name
-  )); 
-    
-    this.setState({flag:true,filterArray:largeGroup,openId:id})
-  }
-  
+  openFiles = (name, id) => {
+    const largeGroup =
+      this.props.files &&
+      this.props.files.filter((activity) => activity.folderName === name);
+
+    this.setState({flag: true, filterArray: largeGroup, openId: id});
+  };
 
   render() {
-    const { loading, files } = this.props;
+    const {loading, files} = this.props;
     let sortData = this.props.files && this.props.files;
     let fileData = sortData.sort(function (a, b) {
       return new Date(b.sharedDate) - new Date(a.sharedDate);
     });
     let arr = [];
-    const largeGroup = fileData && fileData.filter(activity => (
-      activity.folderName &&
-      arr.push(activity.folderName)
-    ));
+    const largeGroup =
+      fileData &&
+      fileData.filter(
+        (activity) => activity.folderName && arr.push(activity.folderName),
+      );
     let uniqueNames = Array.from(new Set(arr));
-    console.log("largeGroup", this.state.filterArray);
+
     return (
       <>
         {/* <LoadingIndicator
@@ -140,89 +135,91 @@ class DashboardMainScreen extends Component {
           <List>
             {uniqueNames
               ? this.getFilteredList(uniqueNames).map((name, key) => {
-              return (
-                <View key={key}>
-                <ListItem
-                  onPress={()=>this.openFiles(name,key)}
-                >
-                  <Left>
-                  <Folder name="folder" size={25} color={appConfig.primaryColor} />
-                    <Text
-                      style={{
-                        fontFamily: appConfig.fontFamily,
-                        color: 'black',
-                        fontWeight:'bold',
-                        marginLeft:10
-                      }}>
-                      {name}
-                     
-                    </Text>
+                  return (
+                    <View key={key}>
+                      <ListItem onPress={() => this.openFiles(name, key)}>
+                        <Left>
+                          <Folder
+                            name="folder"
+                            size={25}
+                            color={appConfig.primaryColor}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: appConfig.fontFamily,
+                              color: 'black',
+                              fontWeight: 'bold',
+                              marginLeft: 10,
+                            }}>
+                            {name}
+                          </Text>
+                        </Left>
 
-                  </Left>
-
-                  <Right>
-                    {/* <Icon
+                        <Right>
+                          {/* <Icon
                       name="download"
                       type="font-awesome"
                       color={appConfig.primaryColor}></Icon> */}
-                  </Right>
-                 
-                 
-                </ListItem>
-              
-                {this.state.flag && this.state.openId ===key ? 
-               <List>
-            {this.state.filterArray.map((file, index) => {
-                return (
-                  <ListItem
-                    key={index}
-                    onPress={() => this.viewPdf(file.name, file.id)}>
-                    <Left>
-                  <PDF name="file-pdf-o" size={25} color="grey" />
-                      <Text
-                        style={{
-                          fontFamily: appConfig.fontFamily,
-                          color: 'black',
-                          marginLeft:10
-                        }}>
-                        {file.name}
-                        <Text
-                          style={{
-                            fontFamily: appConfig.fontFamily,
-                            color: 'grey',
-                          }}>
-                          {`\n ${moment(file.sharedDate).format("DD/MM/YYYY")}`}
-                        </Text>
-                      </Text>
+                        </Right>
+                      </ListItem>
 
-                    </Left>
+                      {this.state.flag && this.state.openId === key ? (
+                        <List>
+                          {this.state.filterArray.map((file, index) => {
+                            return (
+                              <ListItem
+                                key={index}
+                                onPress={() =>
+                                  this.viewPdf(file.name, file.id)
+                                }>
+                                <Left>
+                                  <PDF
+                                    name="file-pdf-o"
+                                    size={25}
+                                    color="grey"
+                                  />
+                                  <Text
+                                    style={{
+                                      fontFamily: appConfig.fontFamily,
+                                      color: 'black',
+                                      marginLeft: 10,
+                                    }}>
+                                    {file.name}
+                                    <Text
+                                      style={{
+                                        fontFamily: appConfig.fontFamily,
+                                        color: 'grey',
+                                      }}>
+                                      {`\n ${moment(file.sharedDate).format(
+                                        'DD/MM/YYYY',
+                                      )}`}
+                                    </Text>
+                                  </Text>
+                                </Left>
 
-                    <Right>
-                      <Icon
-                        name="download"
-                        type="font-awesome"
-                        color={appConfig.primaryColor}></Icon>
-                    </Right>
-
-                  </ListItem>
-                );
-              })}
-              
+                                <Right>
+                                  <Icon
+                                    name="download"
+                                    type="font-awesome"
+                                    color={appConfig.primaryColor}></Icon>
+                                </Right>
+                              </ListItem>
+                            );
+                          })}
+                        </List>
+                      ) : null}
+                    </View>
+                  );
+                })
+              : null}
           </List>
-            :null}
-               </View> 
-               )
-            }) :null}
-         
-          </List>
-          
         </ScrollView>
       </>
     );
   }
 }
 
-const mapStateToProps = ({ files }) => {
+const mapStateToProps = ({files}) => {
   return files;
 };
 

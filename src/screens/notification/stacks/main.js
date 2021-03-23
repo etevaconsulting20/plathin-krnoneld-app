@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Image,
-  RefreshControl
+  RefreshControl,
 } from 'react-native';
 import {
   getAllNotifications,
@@ -22,17 +22,47 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 //const dummyData = new Array(1000);
 
 const Item = ({data}) => {
- let weight = data.isSeen===true? "normal":"bold";
- let size = data.isSeen===true? 16:17;
- let date= moment(data.createdDate._seconds * 1000).format("DD/MM/YYYY")
+  let weight = data.isSeen === true ? 'normal' : 'bold';
+  let size = data.isSeen === true ? 16 : 17;
+  let date = moment(data.createdDate._seconds * 1000).format('DD/MM/YYYY');
 
   return (
     <View style={styles.item}>
-    
-      <Text numberOfLines={1}  style={{fontSize: size,color:"#000",fontWeight:weight,width:200,marginTop:-10}}> <Icon name="comments-o" size={25} color="#900" />   {data.title}</Text>
-      {!data.isSeen && <Text style={{textAlign:"right",marginTop:-25,color:"green",height:30}}><Image  style={{width:20,height:20}} source={require('../../../assets/images/new.png')}/></Text>}
-      <Text numberOfLines={1} style={{flex:1,marginTop:1,color:"grey",fontWeight:weight}}>{data.body}</Text>
-      <Text style={{textAlign:"right",color:"grey",fontWeight:weight}}>  {date }</Text>
+      <Text
+        numberOfLines={1}
+        style={{
+          fontSize: size,
+          color: '#000',
+          fontWeight: weight,
+          width: 200,
+          marginTop: -10,
+        }}>
+        {' '}
+        <Icon name="comments-o" size={25} color="#900" /> {data.title}
+      </Text>
+      {!data.isSeen && (
+        <Text
+          style={{
+            textAlign: 'right',
+            marginTop: -25,
+            color: 'green',
+            height: 30,
+          }}>
+          <Image
+            style={{width: 20, height: 20}}
+            source={require('../../../assets/images/new.png')}
+          />
+        </Text>
+      )}
+      <Text
+        numberOfLines={1}
+        style={{flex: 1, marginTop: 1, color: 'grey', fontWeight: weight}}>
+        {data.body}
+      </Text>
+      <Text style={{textAlign: 'right', color: 'grey', fontWeight: weight}}>
+        {' '}
+        {date}
+      </Text>
     </View>
   );
 };
@@ -43,8 +73,6 @@ class PureItem extends PureComponent {
       <TouchableOpacity onPress={() => this.props.toDetails(this.props.item)}>
         <Item data={this.props.item} />
       </TouchableOpacity>
-     
-
     );
   }
 }
@@ -64,14 +92,13 @@ class NotificationsMainScreen extends Component {
           headerLeft: null,
         });
       this.props.getAllNotifications();
-      console.log('added');
     });
   };
- 
+
   refreshPage = () => {
     this.props.getAllNotifications();
   };
-  getItem = (data,i) => {
+  getItem = (data, i) => {
     return {
       ...data[i],
     };
@@ -94,18 +121,18 @@ class NotificationsMainScreen extends Component {
       );
     });
     return (
-      
-
-      <SafeAreaView style={styles.container}   >
+      <SafeAreaView style={styles.container}>
         <VirtualizedList
           data={notification}
           // removeClippedSubviews={true}
           windowSize={21}
           //initialNumToRender={4}
-          refreshControl={<RefreshControl
-            refreshing={this.props.loading}
-            onRefresh={this.refreshPage}
-          />}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.loading}
+              onRefresh={this.refreshPage}
+            />
+          }
           renderItem={({item}) => {
             return (
               <PureItem

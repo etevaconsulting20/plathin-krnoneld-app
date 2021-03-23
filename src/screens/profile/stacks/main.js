@@ -7,17 +7,11 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import { getLanguageFromCode, AsyncStorage } from '../../../util/helpers/helpers';
 
-import {
-  Container,
-  Card,
-  Left,
-  Right,
-
-} from 'native-base';
-import { ListItem, Icon, Avatar, Input, Button } from 'react-native-elements';
-import { appConfig } from '../../../settings/settings';
-import { changeLanguage, update,getUserInfo } from '../../../actions/index';
-let flag=true;
+import {Container, Card, Left, Right} from 'native-base';
+import {ListItem, Icon, Avatar, Input, Button} from 'react-native-elements';
+import {appConfig} from '../../../settings/settings';
+import {changeLanguage, update, getUserInfo} from '../../../actions/index';
+let flag = true;
 const list = [
   {
     name: 'English',
@@ -43,31 +37,36 @@ class ProfileMainScreen extends Component {
     emailError: false,
     loading: false,
     selectedValue: this.props.locale,
-    isDisable:true
+    isDisable: true,
   };
   isEmailValid = true;
   isfisrtNameValid = true;
   isPhoneNumberValid = true;
   isLastNameValid = true;
 
-
   componentDidMount = async () => {
-    flag=true;
-    console.log("1");
-    
-    this.props.getUserInfo()
+    flag = true;
+
+    this.props.getUserInfo();
     let data = await AsyncStorage.getObjectData('profileData');
-    this.setState({ email: data.email, firstName: data.foreName, lastName: data.sureName, phoneNumber: data.phoneNumber.toString() })
+    this.setState({
+      email: data.email,
+      firstName: data.foreName,
+      lastName: data.sureName,
+      phoneNumber: data.phoneNumber.toString(),
+    });
 
-    this.props.navigation.addListener('focus', async() => {
-    console.log("2");
-
-    flag=true;
-     this.props.getUserInfo();
-     data = await AsyncStorage.getObjectData('profileData');
-     this.setState({ email: data.email, firstName: data.foreName, lastName: data.sureName, phoneNumber: data.phoneNumber.toString() })
-  
-    })
+    this.props.navigation.addListener('focus', async () => {
+      flag = true;
+      this.props.getUserInfo();
+      data = await AsyncStorage.getObjectData('profileData');
+      this.setState({
+        email: data.email,
+        firstName: data.foreName,
+        lastName: data.sureName,
+        phoneNumber: data.phoneNumber.toString(),
+      });
+    });
     // this.props.navigation.setOptions({
     //   headerTitle: I18n.t('settings-editProfile'),
     //   headerTint: 'white',
@@ -83,25 +82,31 @@ class ProfileMainScreen extends Component {
     //   });
   };
   //componentWillUnmount() {
-    // this.props.navigation.dangerouslyGetParent().setOptions({
-    //   tabBarVisible: false,
-    // });
-    // this.props.navigation
-    //   .dangerouslyGetParent()
-    //   .dangerouslyGetParent()
-    //   .setOptions({
-    //     headerShown: false,
-    //   });
+  // this.props.navigation.dangerouslyGetParent().setOptions({
+  //   tabBarVisible: false,
+  // });
+  // this.props.navigation
+  //   .dangerouslyGetParent()
+  //   .dangerouslyGetParent()
+  //   .setOptions({
+  //     headerShown: false,
+  //   });
   //}
   componentDidUpdate(prevProps, prevState) {
-    if (flag && this.props.userInfo!==null && prevState.userInfo !==this.props.userInfo) {
-      flag=false;
-      let data=this.props.userInfo;
-      console.log("data",data);
-      
-      this.setState({ email: data.email, firstName: data.foreName, lastName: data.sureName, phoneNumber: data.phoneNumber.toString() })
-  
-      console.log('pokemons state has changed.')
+    if (
+      flag &&
+      this.props.userInfo !== null &&
+      prevState.userInfo !== this.props.userInfo
+    ) {
+      flag = false;
+      let data = this.props.userInfo;
+
+      this.setState({
+        email: data.email,
+        firstName: data.foreName,
+        lastName: data.sureName,
+        phoneNumber: data.phoneNumber.toString(),
+      });
     }
   }
   refreshPage = () => {
@@ -109,12 +114,8 @@ class ProfileMainScreen extends Component {
     this.props.getUserInfo()
   };
   onChangeLanguage = (code) => {
-    console.log("code", code);
-
-    this.setState({ selectedValue: code })
+    this.setState({selectedValue: code});
     this.props.changeLanguage(code);
-
-
   };
   onPhone(event) {
 
@@ -124,27 +125,26 @@ class ProfileMainScreen extends Component {
         this.isPhoneNumberValid = false;
       } else {
         this.isPhoneNumberValid = true;
-        this.setState({ phoneNumberError: false });
+        this.setState({phoneNumberError: false});
         return;
       }
-
     }
     this.isPhoneNumberValid = false;
   }
   onFirstName(event) {
-    this.setState({ firstName: event.nativeEvent.text,isDisable:false });
+    this.setState({firstName: event.nativeEvent.text, isDisable: false});
     if (event.nativeEvent.text != '') {
       this.isfisrtNameValid = true;
-      this.setState({ firstNameError: false });
+      this.setState({firstNameError: false});
       return;
     }
     this.isfisrtNameValid = false;
   }
   onLastName(event) {
-    this.setState({ lastName: event.nativeEvent.text,isDisable:false });
+    this.setState({lastName: event.nativeEvent.text, isDisable: false});
     if (event.nativeEvent.text != '') {
       this.isLastNameValid = true;
-      this.setState({ lastNameError: false });
+      this.setState({lastNameError: false});
       return;
     }
     this.isLastNameValid = false;
@@ -152,42 +152,42 @@ class ProfileMainScreen extends Component {
 
   updateUser = () => {
     if (!this.isEmailValid) {
-      this.setState({ emailError: true });
+      this.setState({emailError: true});
     }
     if (!this.isfisrtNameValid) {
-      this.setState({ firstNameError: true });
+      this.setState({firstNameError: true});
     }
     if (!this.isLastNameValid) {
-      this.setState({ lastNameError: true });
+      this.setState({lastNameError: true});
     }
     if (!this.isPhoneNumberValid) {
-      this.setState({ phoneNumberError: true });
+      this.setState({phoneNumberError: true});
     }
-    if (this.isfisrtNameValid && this.isPhoneNumberValid && this.isLastNameValid) {
+    if (
+      this.isfisrtNameValid &&
+      this.isPhoneNumberValid &&
+      this.isLastNameValid
+    ) {
       let model = {
         phoneNumber: this.state.phoneNumber,
         foreName: this.state.firstName,
-        sureName: this.state.lastName
+        sureName: this.state.lastName,
       };
       let data = {
         phoneNumber: this.state.phoneNumber,
         foreName: this.state.firstName,
         sureName: this.state.lastName,
-        email: this.state.email
-      }
+        email: this.state.email,
+      };
 
       AsyncStorage.storeObjectData('profileData', data);
 
       this.props.update(model);
-      this.setState({isDisable:true})
-
+      this.setState({isDisable: true});
     }
+  };
 
-
-  }
- 
-  render () {
-    
+  render() {
     return (
       <>
         {/* <Container> */}
@@ -222,26 +222,24 @@ class ProfileMainScreen extends Component {
           <Input
             style={{
               fontFamily: appConfig.fontFamily,
-              color: "#000",
-              padding: 5
+              color: '#000',
+              padding: 5,
             }}
             key="firstname-input-key"
             value={this.state.firstName}
             errorMessage={
               this.state.firstNameError ? I18n.t('about-firstNameError') : null
             }
-            errorStyle={{ color: "red" }}
+            errorStyle={{color: 'red'}}
             onChange={(e) => this.onFirstName(e)}
-
             label={
               <Text
                 style={{
                   fontFamily: appConfig.fontFamily,
-                  color: "#000",
-                  padding: 5
+                  color: '#000',
+                  padding: 5,
                 }}
                 h5>
-
                 {I18n.t('about-firstName')}
               </Text>
             }
@@ -250,26 +248,24 @@ class ProfileMainScreen extends Component {
           <Input
             style={{
               fontFamily: appConfig.fontFamily,
-              color: "#000",
-              padding: 5
+              color: '#000',
+              padding: 5,
             }}
             key="lastName-input-key"
             value={this.state.lastName}
             errorMessage={
               this.state.lastNameError ? I18n.t('about-lastNameError') : null
             }
-            errorStyle={{ color: "red" }}
+            errorStyle={{color: 'red'}}
             onChange={(e) => this.onLastName(e)}
-
             label={
               <Text
                 style={{
                   fontFamily: appConfig.fontFamily,
-                  color: "#000",
-                  padding: 5
+                  color: '#000',
+                  padding: 5,
                 }}
                 h5>
-
                 {I18n.t('about-lastName')}
               </Text>
             }
@@ -277,12 +273,11 @@ class ProfileMainScreen extends Component {
             placeholderTextColor={'grey'}></Input>
           <Input
             style={{
-             
               fontFamily: appConfig.fontFamily,
-              color: "#000",
+              color: '#000',
               padding: 5,
               opacity:0.4,
-              width:100,fontSize:14
+              width:100,fontSize:16
             }}
             key="email-input-key"
             multiline={true}
@@ -293,8 +288,8 @@ class ProfileMainScreen extends Component {
               <Text
                 style={{
                   fontFamily: appConfig.fontFamily,
-                  color: "#000",
-                  padding: 5
+                  color: '#000',
+                  padding: 5,
                 }}
                 h5>
                 {I18n.t('login-emailLabel')}
@@ -305,16 +300,18 @@ class ProfileMainScreen extends Component {
           <Input
             style={{
               fontFamily: appConfig.fontFamily,
-              color: "#000",
-              padding: 5
+              color: '#000',
+              padding: 5,
             }}
             key="phoneNumber-input-key"
             value={this.state.phoneNumber}
             keyboardType="numeric"
             errorMessage={
-              this.state.phoneNumberError ? I18n.t('about-phoneNumberError') : null
+              this.state.phoneNumberError
+                ? I18n.t('about-phoneNumberError')
+                : null
             }
-            errorStyle={{ color: "red" }}
+            errorStyle={{color: 'red'}}
             onChange={(e) => this.onPhone(e)}
             // leftIcon={
             //   <Icon
@@ -329,11 +326,10 @@ class ProfileMainScreen extends Component {
               <Text
                 style={{
                   fontFamily: appConfig.fontFamily,
-                  color: "#000",
-                  padding: 5
+                  color: '#000',
+                  padding: 5,
                 }}
                 h5>
-
                 {I18n.t('about-phoneNumber')}
               </Text>
             }
@@ -369,23 +365,21 @@ class ProfileMainScreen extends Component {
                 );
               })}
             </View> */}
-          <View style={{ textAlign: "center", padding: 10 ,marginHorizontal:120}}>
-              <Button
-                key="get-pin-btn-key"
-                titleStyle={{ fontFamily: appConfig.fontFamily, }}
-                disabled={this.state.isDisable}
-                buttonStyle={{
-                  backgroundColor: appConfig.primaryColor,
-                  padding: 10,
-                  width: 100,
-                  // marginTop: 10,
-
-                }}
-                title={I18n.t("btn_update")}
-                onPress={() => this.updateUser()}></Button> 
-
+          <View
+            style={{textAlign: 'center', padding: 10, marginHorizontal: 120}}>
+            <Button
+              key="get-pin-btn-key"
+              titleStyle={{fontFamily: appConfig.fontFamily}}
+              disabled={this.state.isDisable}
+              buttonStyle={{
+                backgroundColor: appConfig.primaryColor,
+                padding: 10,
+                width: 100,
+                // marginTop: 10,
+              }}
+              title={I18n.t('btn_update')}
+              onPress={() => this.updateUser()}></Button>
           </View>
-
         </ScrollView>
         {/* </Container> */}
       </>
@@ -422,9 +416,11 @@ const style = StyleSheet.create({
   },
 });
 
-const mapStateTopProps = ({ settings, authUser }) => {
-  return { ...settings, ...authUser };
+const mapStateTopProps = ({settings, authUser}) => {
+  return {...settings, ...authUser};
 };
 export default connect(mapStateTopProps, {
-  changeLanguage, update,getUserInfo
+  changeLanguage,
+  update,
+  getUserInfo,
 })(ProfileMainScreen);

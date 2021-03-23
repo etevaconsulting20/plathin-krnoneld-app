@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {
   View,
   StyleSheet,
@@ -8,20 +8,21 @@ import {
   ImageBackground,
   Platform,
   Linking,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-import { Button } from 'react-native-elements';
+import SplashScreen from 'react-native-splash-screen';
+import {Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
-import { StackActions } from '@react-navigation/native';
-import { Card, Input, Text, Icon } from 'react-native-elements';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import {StackActions} from '@react-navigation/native';
+import {Card, Input, Text, Icon} from 'react-native-elements';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import I18n from 'react-native-i18n';
-import { appConfig } from '../settings/settings';
+import {appConfig} from '../settings/settings';
 import LoadingIndicator from '../components/loadingIndicator';
 import DeviceInfo from 'react-native-device-info';
 import getUniqueId from 'react-native-device-info';
-import { loginUser } from '../actions/index';
-let fcToken = "";
+import {loginUser} from '../actions/index';
+let fcToken = '';
 
 class LoginScreen extends Component {
   state = {
@@ -31,7 +32,6 @@ class LoginScreen extends Component {
     emailError: false,
     tokenError: false,
     loading: false,
-
   };
   isEmailValid = false;
   isTokenValid = false;
@@ -48,19 +48,19 @@ class LoginScreen extends Component {
 
   onEmailChange(event) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gim;
-    this.setState({ email: event.nativeEvent.text });
+    this.setState({email: event.nativeEvent.text});
     if (re.test(event.nativeEvent.text)) {
       this.isEmailValid = true;
-      this.setState({ emailError: false });
+      this.setState({emailError: false});
       return;
     }
     this.isEmailValid = false;
   }
   onPinChange(event) {
-    this.setState({ token: event.nativeEvent.text });
+    this.setState({token: event.nativeEvent.text});
     if (event.nativeEvent.text != '') {
       this.isTokenValid = true;
-      this.setState({ tokenError: false });
+      this.setState({tokenError: false});
       return;
     }
     this.isTokenValid = false;
@@ -68,10 +68,10 @@ class LoginScreen extends Component {
 
   sendMagicLink = () => {
     if (!this.isEmailValid) {
-      this.setState({ emailError: true });
+      this.setState({emailError: true});
     }
     if (!this.isTokenValid) {
-      this.setState({ tokenError: true });
+      this.setState({tokenError: true});
     }
     if (this.isTokenValid && this.isEmailValid) {
       let uniqueId = DeviceInfo.getUniqueId();
@@ -80,7 +80,7 @@ class LoginScreen extends Component {
         password: this.state.token,
         token: fcToken,
         deviceType: Platform.OS,
-        deviceUId: uniqueId
+        deviceUId: uniqueId,
       };
 
       this.props.loginUser(model);
@@ -90,8 +90,7 @@ class LoginScreen extends Component {
     this.props.navigation.dispatch(StackActions.replace('mainApp'));
   };
   gotoForgetPwdScreen = () => {
-
-    this.props.navigation.dispatch(StackActions.replace('forgotPassword'))
+    this.props.navigation.dispatch(StackActions.replace('forgotPassword'));
   };
   getFormContent = (emailSent) => {
     return (
@@ -106,7 +105,7 @@ class LoginScreen extends Component {
           errorMessage={
             this.state.emailError ? I18n.t('login-emailErrorMessage') : null
           }
-          errorStyle={{ color: appConfig.loginTextColor }}
+          errorStyle={{color: appConfig.loginTextColor}}
           onChange={(e) => this.onEmailChange(e)}
           leftIcon={
             <Icon
@@ -141,7 +140,7 @@ class LoginScreen extends Component {
           errorMessage={
             this.state.tokenError ? I18n.t('login-pinErrorMessage') : null
           }
-          errorStyle={{ color: appConfig.loginTextColor }}
+          errorStyle={{color: appConfig.loginTextColor}}
           leftIcon={
             <Icon
               type="font-awesome"
@@ -165,7 +164,7 @@ class LoginScreen extends Component {
           placeholderTextColor={'grey'}></Input>
         <Button
           key="get-pin-btn-key"
-          titleStyle={{ fontFamily: appConfig.fontFamily }}
+          titleStyle={{fontFamily: appConfig.fontFamily}}
           buttonStyle={{
             backgroundColor: appConfig.primaryColor,
             padding: 10,
@@ -174,18 +173,21 @@ class LoginScreen extends Component {
           }}
           title={I18n.t('login-loginButtonTitle')}
           onPress={() => this.sendMagicLink()}></Button>
-          <TouchableOpacity  style={{marginTop: 20,width:160,marginLeft:45}} onPress={() => this.gotoForgetPwdScreen()}>
-        <Text style={{ color: 'blue', textDecorationLine: "underline" }}
+        <TouchableOpacity
+          style={{marginTop: 20, width: 160, marginLeft: 45}}
           onPress={() => this.gotoForgetPwdScreen()}>
-          {I18n.t('login-forgotPassword')}
-        </Text>
+          <Text
+            style={{color: 'blue', textDecorationLine: 'underline'}}
+            onPress={() => this.gotoForgetPwdScreen()}>
+            {I18n.t('login-forgotPassword')}
+          </Text>
         </TouchableOpacity>
       </>
     );
   };
 
   render() {
-    const { loading, emailSent } = this.props;
+    const {loading, emailSent} = this.props;
 
     return (
       <>
@@ -194,15 +196,15 @@ class LoginScreen extends Component {
           isVissible={loading}
           message="Loading..."></LoadingIndicator>
         <KeyboardAwareScrollView
-          style={{ backgroundColor: 'white' }}
-          resetScrollToCoords={{ x: 0, y: 0 }}
+          style={{backgroundColor: 'white'}}
+          resetScrollToCoords={{x: 0, y: 0}}
           scrollEnabled={true}>
           <ImageBackground
             source={require('../assets/images/download.jpg')}
             style={style.image}>
             <View style={style.mainDiv}>
               <View style={style.header}>
-                <View style={{ padding: 20 }}>
+                <View style={{padding: 20}}>
                   {/* <Image
                     style={{width: 500, height: 50}}
                     source={require('../assets/images/logo.webp')}
@@ -220,7 +222,7 @@ class LoginScreen extends Component {
 
               <View style={style.loginCard}>
                 {this.getFormContent(emailSent)}
-                <View style={{ paddingTop: 10 }}>
+                <View style={{paddingTop: 10}}>
                   <Text
                     style={{
                       fontSize: 16,
@@ -299,7 +301,7 @@ const style = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ authUser }) => {
+const mapStateToProps = ({authUser}) => {
   return authUser;
 };
 export default connect(mapStateToProps, {

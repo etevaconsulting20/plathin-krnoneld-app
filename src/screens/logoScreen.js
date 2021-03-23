@@ -8,8 +8,8 @@ class LogoScreen extends Component {
   componentDidMount = () => {
     setTimeout(() => {
       this.props.navigation.dispatch(StackActions.replace('mainApp'));
-      SplashScreen.hide();
-    }, 2000);
+     // SplashScreen.hide();
+    }, 100);
   };
 
   render() {

@@ -36,6 +36,11 @@ class LoginScreen extends Component {
   isEmailValid = false;
   isTokenValid = false;
  
+  componentDidMount=()=>{
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 3000);
+  }
 
   componentDidUpdate =async() =>{
     fcToken = await AsyncStorage.getItem('token');

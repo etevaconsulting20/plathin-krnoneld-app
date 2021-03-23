@@ -16,7 +16,7 @@ class ViewPdfScreen extends Component {
   };
   componentDidMount = () => {
     let id = this.props.route.params.id;
-    console.log(id);
+
     let name = this.props.route.params.name;
     this.props.navigation
       .dangerouslyGetParent()
@@ -93,9 +93,7 @@ class ViewPdfScreen extends Component {
       filename: this.state.name,
     };
     Share.open(options)
-      .then((value) => {
-        console.log(value);
-      })
+      .then((value) => {})
       .catch((error) => {
         console.log('ee', error);
       });
@@ -103,7 +101,7 @@ class ViewPdfScreen extends Component {
   render() {
     const resourceType = 'base64';
     const {fileBase64, loading} = this.props;
-    
+
     return (
       <>
         <LoadingIndicator isVissible={loading} message={'Opening File'} />

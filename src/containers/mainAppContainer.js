@@ -9,6 +9,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+
 import {NavigationContainer, StackActions} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -30,7 +31,7 @@ function MainApp(props) {
       name: 'dashboard',
       component: DashboardScreen,
       label: 'tabs-dashboard',
-      iconName: "description",
+      iconName: 'description',
       iconType: 'Material-Icons',
       iconColor: appConfig.textColor,
     },
@@ -140,8 +141,8 @@ function MainApp(props) {
     </>
   );
 }
-const mapStateToProps = ({settings, files, authUser,notification}) => {
-  return {...settings, ...files, ...authUser,...notification};
+const mapStateToProps = ({settings, files, authUser, notification}) => {
+  return {...settings, ...files, ...authUser, ...notification};
 };
 
 const style = StyleSheet.create({

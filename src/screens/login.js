@@ -35,16 +35,15 @@ class LoginScreen extends Component {
   };
   isEmailValid = false;
   isTokenValid = false;
-  componentDidMount = async () => {
+ 
+
+  componentDidUpdate =async() =>{
     fcToken = await AsyncStorage.getItem('token');
 
-
-  }
-
-  componentDidUpdate() {
     if (this.props.isLoggedIn) {
       this.gotoMainApp();
     }
+    
   }
 
   onEmailChange(event) {

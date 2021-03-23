@@ -92,6 +92,7 @@ const userInfoCall=async()=>{
 }
 function* loginUserToFb(model) {
   try {
+    alert(JSON.stringify(model.payload))
    const response = yield call(loginUserCall, model.payload);
     yield delay(2000);
     yield put(loginUserSuccess(response.data));

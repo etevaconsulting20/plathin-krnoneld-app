@@ -82,7 +82,7 @@ class NotificationsMainScreen extends Component {
 
   toDetails = (data) => {
     this.props.getAllSeenNotifications(data.id);
-    this.props.navigation.push('dashboard-details', {data});
+    this.props.navigation.navigate('dashboard-details', {data});
   };
 
   render() {

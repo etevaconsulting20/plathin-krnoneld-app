@@ -70,7 +70,7 @@ class NotificationsMainScreen extends Component {
   };
   deleteNotification = (id) => {
     this.props.getDeleteNotification(id);
-    this.props.navigation.push('dashboard-main');
+    this.props.navigation.navigate('dashboard-main');
   };
 
   render() {
@@ -87,7 +87,8 @@ class NotificationsMainScreen extends Component {
           getItemCount={this.getItemCount}
           getItem={this.getItem}
         /> */}
-        <TouchableOpacity onPress={()=>this.deleteNotification(data.id)}><Text style={{textAlign:"right",marginTop:10}}><Icon name="trash" size={15} color="#900"  /></Text></TouchableOpacity>
+        <TouchableOpacity style={{width:20,marginHorizontal:290}} onPress={()=>this.deleteNotification(data.id)}><Text><Icon name="trash" size={15} color="#900"  /></Text></TouchableOpacity>
+
         <Text style={{fontSize:16,color:"#000",fontWeight:"bold",marginTop:-20,width:200}}>{data.title} </Text>
         <Text style={{color:"grey"}}><Icon name="calendar-alt" size={15} color="grey" />  {date}</Text>
         <Text style={{fontSize:14,marginTop:20}}>{data.body}</Text>
@@ -101,6 +102,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    marginTop:10
   },
   item: {
     backgroundColor: 'red',

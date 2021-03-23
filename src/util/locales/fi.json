@@ -77,7 +77,7 @@
     "notification_delete":"Muistutus poistettu",
     "about-firstNameError":"Syötä etunimi",
     "about-lastNameError":"Syötä sukunimi",
-    "about-phoneNumberError":"Syötä 10 numeroinen puhelinnumero.",
+    "about-phoneNumberError":"Syötä enintään 10 numeroa.",
     "logout-confirm": "Kirjaudu ulos",
     "btn_update":"Päivittää",
     "notification_forgot":"Ole hyvä ja tarkista sähköpostisi."

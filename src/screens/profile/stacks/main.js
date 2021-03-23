@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView ,RefreshControl} from 'react-native';
+import { View, Text, StyleSheet ,RefreshControl} from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import { connect } from 'react-redux';
 import I18n from 'react-native-i18n';
+import { ScrollView } from 'react-native-gesture-handler';
+
 import { getLanguageFromCode, AsyncStorage } from '../../../util/helpers/helpers';
 
 import {
@@ -103,6 +105,7 @@ class ProfileMainScreen extends Component {
     }
   }
   refreshPage = () => {
+    flag=true;
     this.props.getUserInfo()
   };
   onChangeLanguage = (code) => {
@@ -116,7 +119,7 @@ class ProfileMainScreen extends Component {
   onPhone(event) {
 
     this.setState({ phoneNumber: event.nativeEvent.text,isDisable:false });
-    if (event.nativeEvent.text != '' && event.nativeEvent.text.length === 10) {
+    if (event.nativeEvent.text != '' && event.nativeEvent.text.length <= 10) {
       if (isNaN(event.nativeEvent.text)) {
         this.isPhoneNumberValid = false;
       } else {
@@ -188,7 +191,7 @@ class ProfileMainScreen extends Component {
     return (
       <>
         {/* <Container> */}
-        <ScrollView  style={{ flexDirection:'row',backgroundColor:"#fff"}} refreshControl={
+        <ScrollView refreshControl={
             <RefreshControl refreshing={this.props.loading} onRefresh={this.refreshPage} />
         }>
           {/* AboutYouCard */}
@@ -205,14 +208,15 @@ class ProfileMainScreen extends Component {
 
             </View>
           </Card> */}
-          <View style={{ marginLeft: 230 }}>
+          <View style={{ marginLeft: 200 ,marginTop:20}}>
               <Picker
                 selectedValue={this.state.selectedValue}
-                style={{ height: 50, width: 110 }}
+                style={{ height: 50, width: 155 }}
                 onValueChange={(itemValue, itemIndex) => this.onChangeLanguage(itemValue)}
               >
-                <Picker.Item value="en" label="English" />
-                <Picker.Item value="fi" label="Finnish" />
+                
+                <Picker.Item value="en" label="🇺🇸  English" />
+                <Picker.Item value="fi" label="🇫🇮   Finnish" />
               </Picker>
             </View>
           <Input
@@ -278,10 +282,11 @@ class ProfileMainScreen extends Component {
               color: "#000",
               padding: 5,
               opacity:0.4,
-              width:360
+              width:100,fontSize:14
             }}
             key="email-input-key"
             multiline={true}
+            //numberOfLines={2}
             editable={false}
             value={this.state.email}
             label={

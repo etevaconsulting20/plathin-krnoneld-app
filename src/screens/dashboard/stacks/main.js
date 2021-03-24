@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {View, ScrollView, RefreshControl, TouchableOpacity} from 'react-native';
+import {View, ScrollView, RefreshControl,ToastAndroid, TouchableOpacity,PermissionsAndroid, Platform} from 'react-native';
 import {connect} from 'react-redux';
-import {getAllFiles} from '../../../actions/index';
+import {getAllFiles,downloadFileAction} from '../../../actions/index';
 import LoadingIndicator from '../../../components/loadingIndicator';
 import {appConfig} from '../../../settings/settings';
 import {Icon, SearchBar} from 'react-native-elements';
@@ -28,6 +28,7 @@ class DashboardMainScreen extends Component {
     flag: false,
     filterArray: [],
     openId: '',
+    searchArray:false,
   };
   componentDidMount = () => {
     this.props.getAllFiles();
@@ -73,14 +74,21 @@ class DashboardMainScreen extends Component {
       type: 'delete-confirmation',
     });
   };
-  viewPdf = (name, id) => {
+  viewPdf = async(name, id) => {
     this.props.navigation.navigate('dashboard-viewpdf', {id: id, name: name});
+    
   };
   refreshPage = () => {
     this.props.getAllFiles();
   };
   onSearch = (text) => {
-    this.setState({searchText: text});
+    if(text ===""){
+      this.setState({searchText: text,searchArray:false});
+    }
+    else{
+      this.setState({searchText: text,searchArray:true});
+    }
+    
   };
   getFilteredList = (list) => {
     let searchText = this.state.searchText;
@@ -88,7 +96,7 @@ class DashboardMainScreen extends Component {
       return list;
     }
     let result = filter(list, (itm) => {
-      return includes(itm.toLowerCase(), searchText.toLowerCase());
+      return includes(itm.name.toLowerCase(), searchText.toLowerCase());
     });
 
     return result;
@@ -132,6 +140,59 @@ class DashboardMainScreen extends Component {
           refreshControl={
             <RefreshControl refreshing={loading} onRefresh={this.refreshPage} />
           }>
+            {this.state.searchArray ?
+          <List>
+            {fileData
+              ? this.getFilteredList(fileData).map((file, key) => {
+                  return (
+                    <View key={key}>
+                        <List>
+                        
+                          
+                              <ListItem
+                                onPress={() =>
+                                  this.viewPdf(file.name, file.id)
+                                }>
+                                <Left>
+                                  <PDF
+                                    name="file-pdf-o"
+                                    size={25}
+                                    color="grey"
+                                  />
+                                  <Text
+                                    style={{
+                                      fontFamily: appConfig.fontFamily,
+                                      color: 'black',
+                                      marginLeft: 10,
+                                    }}>
+                                    {file.name}
+                                    <Text
+                                      style={{
+                                        fontFamily: appConfig.fontFamily,
+                                        color: 'grey',
+                                      }}>
+                                      {`\n ${moment(file.sharedDate).format(
+                                        'DD/MM/YYYY',
+                                      )}`}
+                                    </Text>
+                                  </Text>
+                                </Left>
+
+                                {/* <Right>
+                                  <Icon
+                                    name="download"
+                                    type="font-awesome"
+                                    color={appConfig.primaryColor}></Icon>
+                                </Right> */}
+                              </ListItem>
+                           
+                        
+                        </List>
+                    </View>
+                  );
+                })
+              : null}
+          </List>:
           <List>
             {uniqueNames
               ? this.getFilteredList(uniqueNames).map((name, key) => {
@@ -197,12 +258,12 @@ class DashboardMainScreen extends Component {
                                   </Text>
                                 </Left>
 
-                                <Right>
+                                {/* <Right>
                                   <Icon
                                     name="download"
                                     type="font-awesome"
                                     color={appConfig.primaryColor}></Icon>
-                                </Right>
+                                </Right> */}
                               </ListItem>
                             );
                           })}
@@ -213,6 +274,7 @@ class DashboardMainScreen extends Component {
                 })
               : null}
           </List>
+  }
         </ScrollView>
       </>
     );
@@ -224,5 +286,5 @@ const mapStateToProps = ({files}) => {
 };
 
 export default connect(mapStateToProps, {
-  getAllFiles,
+  getAllFiles,downloadFileAction
 })(DashboardMainScreen);

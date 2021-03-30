@@ -64,7 +64,7 @@
     "about-nickName": "Nickname",
     "about-countryCode": "Country Code",
     "about-phoneNumber": "Phone no",
-    "about-phoneNumberError":"Enter upto 10 digits only.",
+    "about-phoneNumberError":"Number must be between 7 and 12 digits.",
     "about-address1": "Address 1",
     "about-address2": "Address 2",
     "about-city": "City",

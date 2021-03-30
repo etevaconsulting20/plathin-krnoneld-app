@@ -91,12 +91,14 @@ function RootNavigationContainer(props) {
         <StackNavigator.Navigator>
           <StackNavigator.Screen
             name="login"
-            component={isLoggedIn ? LogoScreen : LoginScreen}
-            options={{headerShown: false}}></StackNavigator.Screen>
-          <StackNavigator.Screen
+            component={isLoggedIn ? MainApp : LoginScreen}
+            options={
+              isLoggedIn ? mainAppHeaderOptions : {headerShown: false}
+            }></StackNavigator.Screen>
+          {/* <StackNavigator.Screen
             name="logoScreen"
             component={LogoScreen}
-            options={{headerShown: false}}></StackNavigator.Screen>
+            options={{headerShown: false}}></StackNavigator.Screen> */}
           <StackNavigator.Screen
             name="mainApp"
             component={MainApp}

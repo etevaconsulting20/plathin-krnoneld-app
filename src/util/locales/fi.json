@@ -80,7 +80,8 @@
     "about-phoneNumberError":"Syötä enintään 10 numeroa.",
     "logout-confirm": "Kirjaudu ulos",
     "btn_update":"Päivittää",
-    "notification_forgot":"Ole hyvä ja tarkista sähköpostisi."
+    "notification_forgot":"Ole hyvä ja tarkista sähköpostisi.",
+    "Opening File":"Tiedoston avaaminen"
 
 
 }

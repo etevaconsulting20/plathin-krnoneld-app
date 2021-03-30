@@ -120,7 +120,7 @@ class ProfileMainScreen extends Component {
   onPhone(event) {
 
     this.setState({ phoneNumber: event.nativeEvent.text,isDisable:false });
-    if (event.nativeEvent.text != '' && event.nativeEvent.text.length <= 10) {
+    if (event.nativeEvent.text != '' && (event.nativeEvent.text.length >= 7 &&  event.nativeEvent.text.length <= 12)) {
       if (isNaN(event.nativeEvent.text)) {
         this.isPhoneNumberValid = false;
       } else {

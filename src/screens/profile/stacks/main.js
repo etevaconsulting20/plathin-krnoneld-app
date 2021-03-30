@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet ,RefreshControl} from 'react-native';
-import { Picker } from '@react-native-community/picker';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import {View, Text, StyleSheet, RefreshControl} from 'react-native';
+import {Picker} from '@react-native-community/picker';
+import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 
-import { getLanguageFromCode, AsyncStorage } from '../../../util/helpers/helpers';
+import {getLanguageFromCode, AsyncStorage} from '../../../util/helpers/helpers';
 
 import {Container, Card, Left, Right} from 'native-base';
 import {ListItem, Icon, Avatar, Input, Button} from 'react-native-elements';
@@ -110,17 +110,20 @@ class ProfileMainScreen extends Component {
     }
   }
   refreshPage = () => {
-    flag=true;
-    this.props.getUserInfo()
+    flag = true;
+    this.props.getUserInfo();
   };
   onChangeLanguage = (code) => {
     this.setState({selectedValue: code});
     this.props.changeLanguage(code);
   };
   onPhone(event) {
-
-    this.setState({ phoneNumber: event.nativeEvent.text,isDisable:false });
-    if (event.nativeEvent.text != '' && (event.nativeEvent.text.length >= 7 &&  event.nativeEvent.text.length <= 12)) {
+    this.setState({phoneNumber: event.nativeEvent.text, isDisable: false});
+    if (
+      event.nativeEvent.text != '' &&
+      event.nativeEvent.text.length >= 7 &&
+      event.nativeEvent.text.length <= 12
+    ) {
       if (isNaN(event.nativeEvent.text)) {
         this.isPhoneNumberValid = false;
       } else {
@@ -191,9 +194,13 @@ class ProfileMainScreen extends Component {
     return (
       <>
         {/* <Container> */}
-        <ScrollView refreshControl={
-            <RefreshControl refreshing={this.props.loading} onRefresh={this.refreshPage} />
-        }>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.loading}
+              onRefresh={this.refreshPage}
+            />
+          }>
           {/* AboutYouCard */}
           {/* <Card style={style.AboutUsCard}>
             
@@ -208,17 +215,17 @@ class ProfileMainScreen extends Component {
 
             </View>
           </Card> */}
-          <View style={{ marginLeft: 200 ,marginTop:20}}>
-              <Picker
-                selectedValue={this.state.selectedValue}
-                style={{ height: 50, width: 155 }}
-                onValueChange={(itemValue, itemIndex) => this.onChangeLanguage(itemValue)}
-              >
-                
-                <Picker.Item value="en" label="🇺🇸  English" />
-                <Picker.Item value="fi" label="🇫🇮   Finnish" />
-              </Picker>
-            </View>
+          <View style={{marginLeft: 200, marginTop: 20}}>
+            <Picker
+              selectedValue={this.state.selectedValue}
+              style={{height: 50, width: 155}}
+              onValueChange={(itemValue, itemIndex) =>
+                this.onChangeLanguage(itemValue)
+              }>
+              <Picker.Item value="en" label="🇺🇸  English" />
+              <Picker.Item value="fi" label="🇫🇮   Finnish" />
+            </Picker>
+          </View>
           <Input
             style={{
               fontFamily: appConfig.fontFamily,
@@ -276,12 +283,13 @@ class ProfileMainScreen extends Component {
               fontFamily: appConfig.fontFamily,
               color: '#000',
               padding: 5,
-              opacity:0.4,
-              width:100,fontSize:16
+              opacity: 0.4,
+              width: 100,
+              fontSize: 16,
             }}
             key="email-input-key"
             multiline={true}
-            //numberOfLines={2}
+            numberOfLines={3}
             editable={false}
             value={this.state.email}
             label={

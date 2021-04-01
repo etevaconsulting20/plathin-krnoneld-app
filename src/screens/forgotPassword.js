@@ -140,7 +140,7 @@ class ForgotScreen extends Component {
         <LoadingIndicator
           color={appConfig.primaryColor}
           isVissible={loading}
-          message="Loading..."></LoadingIndicator>
+          message={I18n.t('Loading')}></LoadingIndicator>
         <KeyboardAwareScrollView
           style={{backgroundColor: 'white'}}
           resetScrollToCoords={{x: 0, y: 0}}

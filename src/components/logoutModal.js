@@ -30,8 +30,8 @@ const style = StyleSheet.create({
     },
     mainDiv: {
         display: "flex",
-        width: 250,
-        height: 130,
+        width: 270,
+        height: 140,
         flexDirection: "column",
         alignItems: "center",
 

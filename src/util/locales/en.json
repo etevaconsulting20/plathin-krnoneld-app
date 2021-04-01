@@ -83,6 +83,7 @@
     "notification_dataError":"Something went wrong,Please try again",
     "notification_delete":"Delete Notification Successfully",
     "btn_update":"Update",
-    "Opening File":"Opening File"
+    "Opening File":"Opening File",
+    "Loading":"Loading..."
 
 }

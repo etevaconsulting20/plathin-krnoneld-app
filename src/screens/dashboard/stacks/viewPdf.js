@@ -8,6 +8,7 @@ import {HeaderBackButton} from '@react-navigation/stack';
 import LoadingIndicator from '../../../components/loadingIndicator';
 import {Icon} from 'react-native-elements';
 import Share from 'react-native-share';
+import I18n from 'react-native-i18n';
 
 class ViewPdfScreen extends Component {
   state = {
@@ -104,7 +105,7 @@ class ViewPdfScreen extends Component {
 
     return (
       <>
-        <LoadingIndicator isVissible={loading} message={'Opening File'} />
+        <LoadingIndicator isVissible={loading} message={I18n.t('Opening File')} />
         <View style={{flex: 1}}>
           {/* Some Controls to change PDF resource */}
           {fileBase64 ? (

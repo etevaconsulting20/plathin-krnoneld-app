@@ -81,7 +81,8 @@
     "logout-confirm": "Kirjaudu ulos",
     "btn_update":"Päivittää",
     "notification_forgot":"Ole hyvä ja tarkista sähköpostisi.",
-    "Opening File":"Tiedoston avaaminen"
+    "Opening File":"Tiedoston avaaminen",
+    "Loading":"Ladataan..."
 
 
 }

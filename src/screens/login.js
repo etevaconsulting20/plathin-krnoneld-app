@@ -35,21 +35,20 @@ class LoginScreen extends Component {
   };
   isEmailValid = false;
   isTokenValid = false;
- 
-  componentDidMount=()=>{
+
+  componentDidMount = () => {
     setTimeout(() => {
       SplashScreen.hide();
     }, 3000);
-  }
+  };
 
-  componentDidUpdate =async() =>{
+  componentDidUpdate = async () => {
     fcToken = await AsyncStorage.getItem('token');
 
     if (this.props.isLoggedIn) {
       this.gotoMainApp();
     }
-    
-  }
+  };
 
   onEmailChange(event) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gim;
@@ -306,8 +305,8 @@ const style = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({authUser}) => {
-  return authUser;
+const mapStateToProps = ({authUser, settings}) => {
+  return {...authUser, ...settings};
 };
 export default connect(mapStateToProps, {
   loginUser,

@@ -116,7 +116,7 @@ function MainApp(props) {
     <>
       <Tab.Navigator
         tabBarOptions={customTabBarOption}
-        initialRouteName="dashboard">
+        initialRouteName="Profile">
         {tabNavigatorData.map((tabItem) => (
           <Tab.Screen
             key={`${'tab-screen-' + tabItem.name}`}

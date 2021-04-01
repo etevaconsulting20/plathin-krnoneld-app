@@ -66,6 +66,13 @@ function changeMomentLocale(locale) {
       break;
   }
 }
+async function getIntialLocale() {
+  let defaultLanguage = await AsyncStorage.getStringData('appLanguage');
+  if (defaultLanguage) {
+    return defaultLanguage;
+  }
+  return appConfig.defaultLocale;
+}
 
 function RootNavigationContainer(props) {
   useEffect(() => {
@@ -75,7 +82,8 @@ function RootNavigationContainer(props) {
   }, []);
 
   const {isLoggedIn, userSetting, loading} = props;
-
+  // let defaultLocale = await getIntialLocale();
+  debugger;
   I18n.locale = userSetting ? userSetting.locale : appConfig.defaultLocale;
 
   changeMomentLocale(I18n.locale);

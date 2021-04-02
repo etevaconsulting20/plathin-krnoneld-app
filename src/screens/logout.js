@@ -28,7 +28,7 @@ class LogoutScreen extends Component {
       <LoadingIndicator
         isVissible={true}
         color={appConfig.primaryColor}
-        message={'Logging Off'}></LoadingIndicator>
+        message={I18n.t('logout-confirm')}></LoadingIndicator>
     );
   }
 }

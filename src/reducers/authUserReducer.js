@@ -28,6 +28,7 @@ const initState = {
   password: '',
   isLoggedIn: false,
   loading: false,
+  authLoading:false,
   user: null,
   authError: false,
   userInfo:null
@@ -54,7 +55,7 @@ export default (state = initState, action) => {
         ...state,
         payload:action.payload,
        // password: action.payload.password,
-        loading: true,
+       authLoading: true,
         authError: false,
       };
     case LOGIN_USER_SUCCESS: {
@@ -63,12 +64,12 @@ export default (state = initState, action) => {
 
       AsyncStorage.storeObjectData("profileData",action.payload)
       AsyncStorage.storeStringData('authToken', token);
-      return {...state, loading: false, isLoggedIn: true};
+      return {...state, authLoading: false, isLoggedIn: true};
     }
 
     case LOGIN_USER_FAILURE:
       NotifyUser.error(I18n.t('notification-networkerror'));
-      return {...state, loading: false};
+      return {...state, authLoading: false};
 
     case LOGOUT_USER:
       return {

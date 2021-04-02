@@ -191,14 +191,16 @@ class LoginScreen extends Component {
   };
 
   render() {
-    const {loading, emailSent} = this.props;
+    const {authLoading, emailSent} = this.props;
+    console.log("LLUUUU",this.props);
+    
 
     return (
       <>
         <LoadingIndicator
           color={appConfig.primaryColor}
-          isVissible={loading}
-          message="Loading..."></LoadingIndicator>
+          isVissible={authLoading}
+          message={I18n.t('Loading')}></LoadingIndicator>
         <KeyboardAwareScrollView
           style={{backgroundColor: 'white'}}
           resetScrollToCoords={{x: 0, y: 0}}

@@ -4,6 +4,7 @@ import { WebView } from "react-native-webview"
 import getContent from "./htmlContent"
 import LoadingIndicator from "../loadingIndicator"
 import { appConfig } from "../../settings/settings"
+import I18n from 'react-native-i18n';
 
 class Tree extends PureComponent{
     state={
@@ -41,7 +42,7 @@ class Tree extends PureComponent{
         
             }}
           />
-          <LoadingIndicator isVissible={this.state.loading} color={appConfig.primaryColor} message="Loading.."/>
+          <LoadingIndicator isVissible={this.state.loading} color={appConfig.primaryColor} message={I18n.t('Loading')}/>
         </>
         )
     }

@@ -83,7 +83,7 @@ function RootNavigationContainer(props) {
 
   const {isLoggedIn, userSetting, loading} = props;
   // let defaultLocale = await getIntialLocale();
-  debugger;
+  
   I18n.locale = userSetting ? userSetting.locale : appConfig.defaultLocale;
 
   changeMomentLocale(I18n.locale);
@@ -93,7 +93,7 @@ function RootNavigationContainer(props) {
       <LoadingIndicator
         isVissible={loading}
         color={appConfig.primaryColor}
-        message={'Setting Up things'}
+        message={I18n.t('Loading')}
       />
       <NavigationContainer>
         <StackNavigator.Navigator>

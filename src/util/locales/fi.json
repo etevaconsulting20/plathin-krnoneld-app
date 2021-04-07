@@ -82,7 +82,8 @@
     "btn_update":"Päivittää",
     "notification_forgot":"Ole hyvä ja tarkista sähköpostisi.",
     "Opening File":"Tiedoston avaaminen",
-    "Loading":"Ladataan..."
-
+    "Loading":"Ladataan...",
+    "DocumentMsg":"Ei vielä asiakirjoja",
+    "NotifyMsg":"Ilmoitusta ei ole vielä saatu"
 
 }

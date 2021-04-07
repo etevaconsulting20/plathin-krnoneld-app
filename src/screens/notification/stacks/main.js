@@ -16,7 +16,7 @@ import {
 } from '../../../actions/index';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import moment, {locales} from 'moment';
-
+import I18n from 'react-native-i18n';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
 //const dummyData = new Array(1000);
@@ -122,6 +122,7 @@ class NotificationsMainScreen extends Component {
     });
     return (
       <SafeAreaView style={styles.container}>
+        {notification.length===0 &&<Text style={{marginHorizontal:90,marginVertical:180,fontSize:16}}>{I18n.t('NotifyMsg')}</Text>}
         <VirtualizedList
           data={notification}
           // removeClippedSubviews={true}

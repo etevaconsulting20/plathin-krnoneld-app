@@ -84,6 +84,7 @@
     "notification_delete":"Delete Notification Successfully",
     "btn_update":"Update",
     "Opening File":"Opening File",
-    "Loading":"Loading..."
-
+    "Loading":"Loading...",
+    "DocumentMsg":"No documents received yet",
+    "NotifyMsg":"No notification received yet"
 }

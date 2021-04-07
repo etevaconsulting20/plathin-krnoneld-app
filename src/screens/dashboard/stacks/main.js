@@ -135,6 +135,7 @@ class DashboardMainScreen extends Component {
           onChangeText={(text) => this.onSearch(text)}
           value={this.state.searchText}
         />
+{uniqueNames.length===0 &&<Text style={{marginHorizontal:90,marginVertical:180,fontSize:16}}>{I18n.t('DocumentMsg')}</Text>}
 
         <ScrollView
           refreshControl={

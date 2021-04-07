@@ -6,6 +6,7 @@ import {CommonActions} from '@react-navigation/native';
 import LoadingIndicator from '../components/loadingIndicator';
 import {appConfig} from '../settings/settings';
 import {logoutUser} from '../actions';
+import I18n from 'react-native-i18n';
 
 class LogoutScreen extends Component {
   componentDidMount() {

@@ -52,13 +52,13 @@ function* getFiles() {
     yield put(getAllFilesSuccess(response.data));
   } catch (error) {
     console.log('files error', error.response.status);
-    // yield put(getAllFilesFailure(error));
-    // if (
-    //   error.response &&
-    //   (error.response.status === 403 || error.response.status === 404)
-    // ) {
-    //   yield put(authErrorAction());
-    // }
+    yield put(getAllFilesFailure(error));
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
+      yield put(authErrorAction());
+    }
   }
 }
 const blobToBase64 = (blob) => {

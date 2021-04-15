@@ -15,7 +15,7 @@
     "login-pinErrorMessage":"Anna 6-numeroinen PIN-koodi",
     "logout-title":"Oletko varma ?",
     "logout-message":"Haluat kirjautua ulos Gravitosta",
-    "logout-cancel":"Peruuttaa",
+    "logout-cancel":"Peruuta",
     "logout_confirm":"Kirjaudu ulos",
     "logout-confirmheader":"Kirjaudu ulos?",
     "logout-confirmmessage":"Kirjautumalla uudelleen voit aina nähdä tietosi ja tiedostosi",
@@ -71,7 +71,7 @@
     "communication-webNotificationSent": "Web notification sent on ",
     "communication-mobileNotificationSent": "Mobile notification sent on ",
     "communication-SMSSent": "SMS sent on ",
-    "placeholder_typeHere":"Kirjoita Tähän...",
+    "placeholder_typeHere":"Kirjoita tähän...",
     "notification_dataUpdate":"Tiedot päivitetty",
     "notification_dataError":"Jotain meni vikaan. Yritä uudelleen!",
     "notification_delete":"Muistutus poistettu",
@@ -79,11 +79,11 @@
     "about-lastNameError":"Syötä sukunimi",
     "about-phoneNumberError":"Numeron on oltava 7–12 numeroa.",
     "logout-confirm": "Kirjaudu ulos",
-    "btn_update":"Päivittää",
+    "btn_update":"Päivitä",
     "notification_forgot":"Ole hyvä ja tarkista sähköpostisi.",
     "Opening File":"Tiedoston avaaminen",
     "Loading":"Ladataan...",
     "DocumentMsg":"Ei vielä asiakirjoja",
-    "NotifyMsg":"Ilmoitusta ei ole vielä saatu"
-
+    "NotifyMsg":"Ilmoitusta ei ole vielä saatu",
+    "New":"UUSI"
 }

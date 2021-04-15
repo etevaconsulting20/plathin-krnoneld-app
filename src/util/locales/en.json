@@ -86,5 +86,6 @@
     "Opening File":"Opening File",
     "Loading":"Loading...",
     "DocumentMsg":"No documents received yet",
-    "NotifyMsg":"No notification received yet"
+    "NotifyMsg":"No notification received yet",
+    "New":"NEW"
 }

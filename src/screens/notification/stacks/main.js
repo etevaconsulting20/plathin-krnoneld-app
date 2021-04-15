@@ -42,17 +42,25 @@ const Item = ({data}) => {
       </Text>
       {!data.isSeen && (
         <Text
-          style={{
-            textAlign: 'right',
-            marginTop: -25,
-            color: 'green',
-            height: 30,
-          }}>
-          <Image
-            style={{width: 20, height: 20}}
-            source={require('../../../assets/images/new.png')}
-          />
-        </Text>
+        style={{
+          marginHorizontal:250,
+          textAlign: 'right',
+          marginTop: -22,
+          color: 'white',
+          fontWeight:"bold",
+          fontSize:10,
+          width: 25,
+          height: 25,
+          padding:3,
+          paddingTop:5,
+          borderRadius: 30 / 2,
+          backgroundColor: "green",
+        }}>{I18n.t('New')}
+        {/* <Image
+          style={{width: 20, height: 20}}
+          source={require('../../../assets/images/new.png')}
+        /> */}
+      </Text>
       )}
       <Text
         numberOfLines={1}

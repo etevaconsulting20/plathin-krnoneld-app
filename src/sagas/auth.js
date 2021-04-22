@@ -27,12 +27,13 @@ import {
 import axios from 'axios';
 import {AsyncStorage, NotifyUser} from '../util/helpers/helpers';
 import {updateLocale} from 'moment';
+import {appConfig} from '../settings/settings';
 
 const user = (state) => state.authUser;
 
 const loginUserCall = async (model) => {
   let url =
-    'https://asia-south1-plathinkroneld.cloudfunctions.net/api/users/token';
+    `${appConfig.apiPath}/users/token`;
 
   let result = await axios.post(url, model);
 
@@ -40,7 +41,7 @@ const loginUserCall = async (model) => {
 };
 
 const logoutUserCall = async () => {
-  let url = 'https://asia-south1-plathinkroneld.cloudfunctions.net/api/signout';
+  let url = `${appConfig.apiPath}/signout`;
   let token = await AsyncStorage.getStringData('authToken');
   let config = {
     headers: {Authorization: 'Bearer ' + token},
@@ -51,7 +52,7 @@ const logoutUserCall = async () => {
 };
 const forgotpasswordCall = async (model) => {
   let url =
-    'https://asia-south1-plathinkroneld.cloudfunctions.net/api/users/forgetpassword';
+    `${appConfig.apiPath}/users/forgetpassword`;
   let token = await AsyncStorage.getStringData('authToken');
   let config = {
     headers: {Authorization: 'Bearer ' + token},
@@ -62,7 +63,7 @@ const forgotpasswordCall = async (model) => {
 };
 const changepwdCall = async (model) => {
   let url =
-    'https://asia-south1-plathinkroneld.cloudfunctions.net/api/users/confirmpassword';
+    `${appConfig.apiPath}/users/confirmpassword`;
   let token = await AsyncStorage.getStringData('authToken');
   let config = {
     headers: {Authorization: 'Bearer ' + token},
@@ -73,7 +74,7 @@ const changepwdCall = async (model) => {
 };
 
 const updateCall = async (model) => {
-  let url = 'https://asia-south1-plathinkroneld.cloudfunctions.net/api/users';
+  let url = `${appConfig.apiPath}/users`;
   let token = await AsyncStorage.getStringData('authToken');
   let config = {
     headers: {Authorization: 'Bearer ' + token},
@@ -83,7 +84,7 @@ const updateCall = async (model) => {
   return result;
 };
 const userInfoCall = async () => {
-  let url = 'https://asia-south1-plathinkroneld.cloudfunctions.net/api/users';
+  let url = `${appConfig.apiPath}/users`;
   let token = await AsyncStorage.getStringData('authToken');
   let config = {
     headers: {Authorization: 'Bearer ' + token},

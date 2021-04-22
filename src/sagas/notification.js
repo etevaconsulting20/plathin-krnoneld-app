@@ -23,7 +23,7 @@ import {AsyncStorage} from '../util/helpers/helpers';
 const user = (state) => state.files;
 
 const getNotificationCall = async () => {
-  let url = `https://asia-south1-plathinkroneld.cloudfunctions.net/api/notifications`;
+  let url = `${appConfig.apiPath}/notifications`;
   let token = await AsyncStorage.getStringData('authToken');
   let config = {
     headers: {Authorization: 'Bearer ' + token},
@@ -44,7 +44,7 @@ function* getNotification() {
 }
 
 const getSeenNotificationCall = async (model) => {
-  let url = `https://asia-south1-plathinkroneld.cloudfunctions.net/api/notifications/users/seen?id=${model}`;
+  let url = `${appConfig.apiPath}/notifications/users/seen?id=${model}`;
   let token = await AsyncStorage.getStringData('authToken');
   let config = {
     headers: {Authorization: 'Bearer ' + token},
@@ -65,7 +65,7 @@ function* getSeenNotification(model) {
 }
 
 const getDeleteCall = async (model) => {
-  let url = `https://asia-south1-plathinkroneld.cloudfunctions.net/api/notifications/users/delete?id=${model}`;
+  let url = `${appConfig.apiPath}/notifications/users/delete?id=${model}`;
   let token = await AsyncStorage.getStringData('authToken');
   let config = {
     headers: {Authorization: 'Bearer ' + token},

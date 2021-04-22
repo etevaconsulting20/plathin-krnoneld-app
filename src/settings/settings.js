@@ -7,8 +7,8 @@ export const appConfig = {
   headerLogoUrl:
     'https://le-de.cdn-website.com/035329bdfa684613b56908a723e38cdf/dms3rep/multi/opt/Plathin-Kroneld_logoLARGER-720w.png',
   defaultLocale: 'en',
-  apiPath: 'https://dev-api.gravito.net/api',
-  identityServerBaseUrl: 'https://dev-identity.gravito.net',
+  apiPath: 'https://asia-south1-plathinkroneld.cloudfunctions.net/api', // P&K API Path
+  identityServerBaseUrl: 'https://asia-south1-plathinkroneld.cloudfunctions.net',
   infoColor: '#DEDBD7',
   timeoutSetting: 500,
   fontFamily: 'Poppins-Regular',
@@ -17,6 +17,6 @@ export const appConfig = {
     client_secret: 'client_secret',
     grant_type: 'client_credentials',
     scope: 'API',
-    authority: 'https://dev-identity.gravito.net',
+    authority: 'https://asia-south1-plathinkroneld.cloudfunctions.net',
   },
 };

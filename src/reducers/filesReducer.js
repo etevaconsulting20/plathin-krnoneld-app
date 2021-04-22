@@ -31,7 +31,7 @@ export default (state = initState, action) => {
     }
 
     case GET_ALL_FILES_FAILURE:
-      NotifyUser.error(I18n.t('notification-networkerror'));
+    //  NotifyUser.error(I18n.t('notification-networkerror'));
       let error = action.payload;
       return {...state, loading: false};
     case DOWNLOAD_FILE: {

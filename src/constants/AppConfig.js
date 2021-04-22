@@ -24,10 +24,9 @@ const AppConfig = {
      appUrl: 'http://localhost:3000', // App Url
     adminUrl:'http://localhost:3100',
     appLocalUrl:'/assets/data/',
-    cookieDomain:'https://*.gravito.net', // 'https://*.gravito.net'
     cookieSecure:true,
-    brandName: 'Gravito', // Brand Name  
-    apiPath: 'https://dev-account.gravito.net/api', // Gravito API Path
+    brandName: 'Plathin & Kroneld', // Brand Name  
+    apiPath: 'https://asia-south1-plathinkroneld.cloudfunctions.net/api', // P&K API Path
     facebookAppId:'1946801098918823',
     googleClientId:'161046543811-vchpbkuq32oh2vigslkln3n1271bplov.apps.googleusercontent.com',
     navCollapsed: false,                                      // Sidebar collapse
@@ -41,8 +40,6 @@ const AppConfig = {
     enableThemeOptions: true,                              // Enable Theme Options
     // locale:locale,
     enableUserTour: process.env.NODE_ENV === 'production' ? true : false,  // Enable / Disable User Tour
-    copyRightText: 'Copyright © Gravito Ltd 2019',      // Copy Right Text
-    // light theme colors
     themeColors: {
       'primary': '#FFA100',
       'secondary': '#606060',

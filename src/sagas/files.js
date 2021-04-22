@@ -14,13 +14,15 @@ import {
 } from '../actions/index';
 import axios from 'axios';
 import {AsyncStorage} from '../util/helpers/helpers';
+import {appConfig} from '../settings/settings';
+
 // var fileDownload = require('js-file-download');
 // var FileSaver = require('file-saver');
 
 const user = (state) => state.files;
 
 const getAllfilesCall = async () => {
-  let url = `https://asia-south1-plathinkroneld.cloudfunctions.net/api/files`;
+  let url = `${appConfig.apiPath}/files`;
   let token = await AsyncStorage.getStringData('authToken');
   let config = {
     headers: {Authorization: 'Bearer ' + token},
@@ -32,7 +34,7 @@ const getAllfilesCall = async () => {
 
 const downloadfilesCall = async (id) => {
 
-  let url = `https://asia-south1-plathinkroneld.cloudfunctions.net/api/files/${id}/download`;
+  let url = `${appConfig.apiPath}/files/${id}/download`;
   let token = await AsyncStorage.getStringData('authToken');
   let config = {
     responseType: 'blob',

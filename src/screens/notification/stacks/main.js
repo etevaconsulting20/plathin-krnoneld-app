@@ -41,36 +41,39 @@ const Item = ({data}) => {
         <Icon name="comments-o" size={25} color="#900" /> {data.title}
       </Text>
       {!data.isSeen && (
-        <Text
+        <View
         style={{
+          width:300,
           marginHorizontal:250,
-          textAlign: 'right',
-          marginTop: -22,
-          color: 'white',
-          fontWeight:"bold",
-          fontSize:10,
+         // marginVertical:-10,
+          marginTop:-20,
+          justifyContent:"center",alignItems:"center",
           width: 25,
           height: 25,
-          padding:3,
-          paddingTop:5,
           borderRadius: 30 / 2,
           backgroundColor: "green",
-        }}>{I18n.t('New')}
-        {/* <Image
-          style={{width: 20, height: 20}}
-          source={require('../../../assets/images/new.png')}
-        /> */}
-      </Text>
+        }}><Text style={{
+          color: 'white',
+          fontWeight:"bold",
+          fontSize:9,
+          textAlign:"center"
+        }}>
+        {I18n.t('New')}
+        </Text>
+        
+      </View>
       )}
+      <View style={{display:"flex"}}>
       <Text
         numberOfLines={1}
-        style={{flex: 1, marginTop: 1, color: 'grey', fontWeight: weight}}>
+        style={{ color: 'grey', marginTop:10,fontWeight: weight,marginLeft:10,width:140}}>
         {data.body}
       </Text>
-      <Text style={{textAlign: 'right', color: 'grey', fontWeight: weight}}>
+      <Text style={{textAlign: 'right', color: 'grey',marginTop:-14, fontWeight: weight}}>
         {' '}
         {date}
       </Text>
+    </View>
     </View>
   );
 };

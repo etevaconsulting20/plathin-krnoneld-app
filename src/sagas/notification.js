@@ -19,6 +19,7 @@ import {
 } from '../actions/index';
 import axios from 'axios';
 import {AsyncStorage} from '../util/helpers/helpers';
+import {appConfig} from '../settings/settings';
 
 const user = (state) => state.files;
 
@@ -36,7 +37,6 @@ const getNotificationCall = async () => {
 function* getNotification() {
   try {
     const response = yield call(getNotificationCall);
-
     yield put(getAllNotificationsSuccess(response.data));
   } catch (error) {
     yield put(getAllNotificationsFailure());

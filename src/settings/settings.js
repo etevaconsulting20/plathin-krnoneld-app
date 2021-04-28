@@ -6,7 +6,7 @@ export const appConfig = {
   headerColor: '#DEDBD7',
   headerLogoUrl:
     'https://le-de.cdn-website.com/035329bdfa684613b56908a723e38cdf/dms3rep/multi/opt/Plathin-Kroneld_logoLARGER-720w.png',
-  defaultLocale: 'en',
+  defaultLocale: 'fi',
   apiPath: 'https://europe-west3-plathinkroneld-c969a.cloudfunctions.net/api', // P&K API Path
   infoColor: '#DEDBD7',
   timeoutSetting: 500,

@@ -19,6 +19,7 @@ import {
 } from '../actions/index';
 import axios from 'axios';
 import {AsyncStorage} from '../util/helpers/helpers';
+import {appConfig} from '../settings/settings';
 
 const user = (state) => state.files;
 

@@ -3,6 +3,7 @@ import {View, ScrollView, RefreshControl,ToastAndroid, TouchableOpacity,Permissi
 import {connect} from 'react-redux';
 import {getAllFiles,downloadFileAction} from '../../../actions/index';
 import LoadingIndicator from '../../../components/loadingIndicator';
+
 import {appConfig} from '../../../settings/settings';
 import {Icon, SearchBar} from 'react-native-elements';
 import Folder from 'react-native-vector-icons/Entypo';
@@ -10,7 +11,6 @@ import PDF from 'react-native-vector-icons/FontAwesome';
 import {filter, includes} from 'lodash';
 import moment, {locales} from 'moment';
 import I18n from 'react-native-i18n';
-
 import {
   Container,
   Header,
@@ -21,6 +21,7 @@ import {
   Left,
   Right,
 } from 'native-base';
+import firebase from '@react-native-firebase/app';
 
 class DashboardMainScreen extends Component {
   state = {
@@ -30,7 +31,14 @@ class DashboardMainScreen extends Component {
     openId: '',
     searchArray:false,
   };
-  componentDidMount = () => {
+  componentDidMount = async() => {
+    
+    const notificationOpen=await firebase.messaging().getInitialNotification()
+        if (notificationOpen) {
+          this.props.navigation.navigate("notification-main");
+          console.log("HIIIIII",notificationOpen)
+        }
+    
     this.props.getAllFiles();
     this.props.navigation.addListener('focus', () => {
       this.props.getAllFiles();
@@ -70,12 +78,17 @@ class DashboardMainScreen extends Component {
     });
   };
   openModal = () => {
-    this.props.navigation.navigate('modal', {
+    this.props.navigation.navigate.d('modal', {
       type: 'delete-confirmation',
     });
   };
   viewPdf = async(name, id) => {
-    this.props.navigation.navigate('dashboard-viewpdf', {id: id, name: name});
+    // this.props.history.push("notification-main");
+   // console.log("thissssss",this.props.navigation.jumpTo("notification-main"))
+    //this.props.navigation.jumpTo('notification-main');
+    // this.props.navigation.navigate('dashboard-viewpdf', {id: id, name: name});
+    this.props.navigation.navigate("notification")
+ 
     
   };
   refreshPage = () => {

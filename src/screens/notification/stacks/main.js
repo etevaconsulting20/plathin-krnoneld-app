@@ -91,19 +91,19 @@ class PureItem extends PureComponent {
 class NotificationsMainScreen extends Component {
   componentDidMount = () => {
     this.props.getAllNotifications();
-    this.props.navigation.addListener('focus', () => {
-      this.props.navigation
-        .dangerouslyGetParent()
-        .dangerouslyGetParent()
-        .setOptions({
-          cardOverlayEnabled: false,
-          headerTitle: 'PLATHIN & KRONELD',
-          headerTint: 'white',
-          headerTitleStyle: {marginHorizontal: 0, fontSize: 18},
-          headerLeft: null,
-        });
-      this.props.getAllNotifications();
-    });
+    // this.props.navigation.addListener('focus', () => {
+    //   this.props.navigation
+    //     .dangerouslyGetParent()
+    //     .dangerouslyGetParent()
+    //     .setOptions({
+    //       cardOverlayEnabled: false,
+    //       headerTitle: 'PLATHIN & KRONELD',
+    //       headerTint: 'white',
+    //       headerTitleStyle: {marginHorizontal: 0, fontSize: 18},
+    //       headerLeft: null,
+    //     });
+    //   this.props.getAllNotifications();
+    // });
   };
 
   refreshPage = () => {
@@ -120,7 +120,7 @@ class NotificationsMainScreen extends Component {
 
   toDetails = (data) => {
     this.props.getAllSeenNotifications(data.id);
-    this.props.navigation.navigate('dashboard-details', {data});
+    this.props.navigation.navigate('notification-details', {data});
   };
 
   render() {

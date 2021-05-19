@@ -35,9 +35,10 @@ import {
       payload:model
     };
   };
-  export const getAllSeenNotificationsSuccess = () => {
+  export const getAllSeenNotificationsSuccess = (updateFile) => {
     return {
       type: SEEN_NOTIFICATION_SUCCESS,
+      payload:updateFile
       
     };
   };
@@ -55,9 +56,10 @@ import {
       payload:model
     };
   };
-  export const getDeleteNotificationSuccess = () => {
+  export const getDeleteNotificationSuccess = (updateFile) => {
     return {
       type: DELETE_NOTIFICATION_SUCCESS,
+      payload:updateFile
       
     };
   };

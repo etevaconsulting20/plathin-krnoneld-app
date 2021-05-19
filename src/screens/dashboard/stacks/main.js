@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, ScrollView, RefreshControl,ToastAndroid, TouchableOpacity,PermissionsAndroid, Platform} from 'react-native';
+import {View, ScrollView, RefreshControl,ToastAndroid, TouchableOpacity,PermissionsAndroid, Platform,LogBox} from 'react-native';
 import {connect} from 'react-redux';
 import {getAllFiles,downloadFileAction} from '../../../actions/index';
 import LoadingIndicator from '../../../components/loadingIndicator';
@@ -32,11 +32,19 @@ class DashboardMainScreen extends Component {
     searchArray:false,
   };
   componentDidMount = async() => {
-    
+    LogBox.ignoreLogs(['Warning: ...']);    
     const notificationOpen=await firebase.messaging().getInitialNotification()
         if (notificationOpen) {
-          this.props.navigation.navigate("notification-main");
-          console.log("HIIIIII",notificationOpen)
+         let obj= await JSON.stringify(notificationOpen);
+         let parseJsonData = JSON.parse(obj);
+         
+         if(parseJsonData.data !==undefined && parseJsonData.data.isActive==="false"){
+            this.props.navigation.navigate('logout');
+         }
+         else{
+          this.props.navigation.dangerouslyGetParent().navigate('notifications');
+         }
+
         }
     
     this.props.getAllFiles();
@@ -78,7 +86,7 @@ class DashboardMainScreen extends Component {
     });
   };
   openModal = () => {
-    this.props.navigation.navigate.d('modal', {
+    this.props.navigation.navigate('modal', {
       type: 'delete-confirmation',
     });
   };
@@ -86,11 +94,11 @@ class DashboardMainScreen extends Component {
     // this.props.history.push("notification-main");
    // console.log("thissssss",this.props.navigation.jumpTo("notification-main"))
     //this.props.navigation.jumpTo('notification-main');
-    // this.props.navigation.navigate('dashboard-viewpdf', {id: id, name: name});
-    this.props.navigation.navigate("notification")
+    this.props.navigation.navigate('dashboard-viewpdf', {id: id, name: name});
  
     
   };
+  
   refreshPage = () => {
     this.props.getAllFiles();
   };

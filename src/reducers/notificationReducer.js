@@ -40,7 +40,7 @@ export default (state = initState, action) => {
       };
     case SEEN_NOTIFICATION_SUCCESS: {
         // NotifyUser.success("Successfully");
-      return {...state, loading: false};
+      return {...state, loading: false,notification: action.payload};
     }
 
     case SEEN_NOTIFICATION_FAILURE:
@@ -56,7 +56,7 @@ export default (state = initState, action) => {
       };
     case DELETE_NOTIFICATION_SUCCESS: {
        NotifyUser.success(I18n.t('notification_delete'));
-      return {...state, loading: false};
+      return {...state, loading: false,notification: action.payload};
     }
 
     case DELETE_NOTIFICATION_FAILURE:

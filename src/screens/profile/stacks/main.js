@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, RefreshControl} from 'react-native';
+import {View, Text, StyleSheet, RefreshControl,LogBox} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
@@ -45,6 +45,7 @@ class ProfileMainScreen extends Component {
   isLastNameValid = true;
 
   componentDidMount = async () => {
+    LogBox.ignoreLogs(['Warning: ...']);
     flag = true;
 
     this.props.getUserInfo();

@@ -23,6 +23,7 @@ import {
   updateSuccess,
   getUserInfoSuccess,
   getUserInfoFailure,
+  authErrorAction
 } from '../actions/index';
 import axios from 'axios';
 import {AsyncStorage, NotifyUser} from '../util/helpers/helpers';
@@ -100,6 +101,12 @@ function* loginUserToFb(model) {
     yield put(loginUserSuccess(response.data));
   } catch (error) {
     yield put(loginUserFailure());
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
+      yield put(authErrorAction());
+    }
   }
 }
 function* logoutUserToFb() {
@@ -109,6 +116,12 @@ function* logoutUserToFb() {
     yield put(logoutUserSuccess());
   } catch (error) {
     yield put(logoutUserFailure());
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
+      yield put(authErrorAction());
+    }
   }
 }
 function* forgotpasswordToFb(model) {
@@ -117,6 +130,12 @@ function* forgotpasswordToFb(model) {
     yield put(forgotPasswordSuccess());
   } catch (error) {
     yield put(forgotPasswordFailure());
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
+      yield put(authErrorAction());
+    }
   }
 }
 function* changepwdToFb(model) {
@@ -125,6 +144,12 @@ function* changepwdToFb(model) {
     yield put(changePasswordSuccess());
   } catch (error) {
     yield put(changePasswordFailure());
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
+      yield put(authErrorAction());
+    }
   }
 }
 function* updateToFb(model) {
@@ -134,6 +159,12 @@ function* updateToFb(model) {
     yield put(updateSuccess());
   } catch (error) {
     yield put(updateFailure());
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
+      yield put(authErrorAction());
+    }
   }
 }
 function* updateUserInfoCall() {
@@ -142,6 +173,12 @@ function* updateUserInfoCall() {
     yield put(getUserInfoSuccess(res.data));
   } catch (error) {
     yield put(getUserInfoFailure());
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
+      yield put(authErrorAction());
+    }
   }
 }
 export const authenticationSagas = [

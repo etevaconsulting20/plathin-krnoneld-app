@@ -88,12 +88,12 @@ function* downloadFilefromServer() {
   } catch (error) {
     console.log('file downloaf error', error);
     yield put(downloadFileFailure(error));
-    // if (
-    //   error.response &&
-    //   (error.response.status === 403 || error.response.status === 404)
-    // ) {
-    //   yield put(authErrorAction());
-    // }
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
+      yield put(authErrorAction());
+    }
   }
 }
 

@@ -9,6 +9,7 @@ import {
   Platform,
   Linking,
   TouchableOpacity,
+  LogBox
 } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import {Button} from 'react-native-elements';
@@ -37,12 +38,16 @@ class LoginScreen extends Component {
   isTokenValid = false;
 
   componentDidMount = () => {
+    LogBox.ignoreLogs(['Warning: ...']);
+
     setTimeout(() => {
       SplashScreen.hide();
     }, 3000);
   };
 
   componentDidUpdate = async () => {
+    LogBox.ignoreLogs(['WARN: `Accessing the state property of the route object is not supported.`']);
+
     fcToken = await AsyncStorage.getItem('token');
 
     if (this.props.isLoggedIn) {
@@ -192,9 +197,6 @@ class LoginScreen extends Component {
 
   render() {
     const {authLoading, emailSent} = this.props;
-    console.log("LLUUUU",this.props);
-    
-
     return (
       <>
         <LoadingIndicator

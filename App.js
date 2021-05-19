@@ -32,6 +32,16 @@ class App extends Component {
         25,
         50,
       );
+      if(parseJsonData.data !==undefined && parseJsonData.data.isActive==="false"){
+        console.log("OOO")
+        try {
+          await AsyncStorage.removeItem("authToken");
+          return true;
+      }
+      catch(exception) {
+          return false;
+      }
+    }
     });
     messaging()
       .getToken()

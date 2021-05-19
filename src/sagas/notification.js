@@ -16,6 +16,7 @@ import {
   getAllSeenNotificationsFailure,
   getDeleteNotificationSuccess,
   getDeleteNotificationFailure,
+  authErrorAction
 } from '../actions/index';
 import axios from 'axios';
 import {AsyncStorage} from '../util/helpers/helpers';
@@ -41,6 +42,12 @@ function* getNotification() {
     yield put(getAllNotificationsSuccess(response.data));
   } catch (error) {
     yield put(getAllNotificationsFailure());
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
+      yield put(authErrorAction());
+    }
   }
 }
 
@@ -58,10 +65,22 @@ const getSeenNotificationCall = async (model) => {
 function* getSeenNotification(model) {
   try {
     yield call(getSeenNotificationCall, model.payload);
-    yield put(getAllSeenNotificationsSuccess());
+    const responseData = yield call(getNotificationCall);
+    if(responseData){
+      yield put(getAllSeenNotificationsSuccess(responseData.data));
+
+    }
+    console.log("ssss",model.payload)
+
   } catch (error) {
     yield put(getAllSeenNotificationsFailure());
     console.log('files error', error);
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
+      yield put(authErrorAction());
+    }
   }
 }
 
@@ -81,11 +100,21 @@ function* getDelete(model) {
   try {
     debugger;
     const response = yield call(getDeleteCall, model.payload);
+    const responseData = yield call(getNotificationCall);
+    if(responseData){
+      yield put(getDeleteNotificationSuccess(responseData.data));
 
-    yield put(getDeleteNotificationSuccess());
+    }
+    //yield put(getDeleteNotificationSuccess());
   } catch (error) {
     yield put(getDeleteNotificationFailure());
     console.log('delete error', error);
+    if (
+      error.response &&
+      (error.response.status === 403 || error.response.status === 401)
+    ) {
+      yield put(authErrorAction());
+    }
   }
 }
 

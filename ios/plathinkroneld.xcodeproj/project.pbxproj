@@ -31,7 +31,6 @@
 		7CA3600308654FA4BB02FF48 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9AAA07BDA24404D88F458E1 /* Roboto_medium.ttf */; };
 		7CD4E77BF3C04116A10DAFA0 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6C802C38DFE456691AC4D1C /* rubicon-icon-font.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		829581F7265F816E00CD2C6C /* libRNCPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 829581F6265F816E00CD2C6C /* libRNCPicker.a */; };
 		82E7A0DA265E8C5800F2F3A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 82E7A0D9265E8C5800F2F3A8 /* GoogleService-Info.plist */; };
 		93826982709D4BCFBE8A75D2 /* CeraPro-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4527A1C3FFD04C5BA7FC3EA9 /* CeraPro-MediumItalic.ttf */; };
 		C2921B26871947699EA6E4BE /* CeraPro-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0E57D4919B349179F2AAC26 /* CeraPro-LightItalic.ttf */; };
@@ -58,13 +57,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "plathinkroneld-tvOS";
-		};
-		829581EF265F7F9C00CD2C6C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 829581EB265F7F9C00CD2C6C /* RNCPicker.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNCPicker;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -106,7 +98,6 @@
 		7102BBE7F159484988E096B7 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		762A8BA0851A44E9A918A2E3 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = plathinkroneld/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		829581EB265F7F9C00CD2C6C /* RNCPicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCPicker.xcodeproj; path = "../node_modules/@react-native-community/picker/ios/RNCPicker.xcodeproj"; sourceTree = "<group>"; };
 		829581F6265F816E00CD2C6C /* libRNCPicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNCPicker.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		82E7A0D9265E8C5800F2F3A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89C25E3AC19746399777DDC4 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -166,7 +157,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				829581F7265F816E00CD2C6C /* libRNCPicker.a in Frameworks */,
 				12AFC183689B967B775C2EC8 /* libPods-plathinkroneld.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,18 +285,9 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		829581EC265F7F9C00CD2C6C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				829581F0265F7F9C00CD2C6C /* libRNCPicker.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				829581EB265F7F9C00CD2C6C /* RNCPicker.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -474,12 +455,6 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 829581EC265F7F9C00CD2C6C /* Products */;
-					ProjectRef = 829581EB265F7F9C00CD2C6C /* RNCPicker.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* plathinkroneld */,
@@ -489,16 +464,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		829581F0265F7F9C00CD2C6C /* libRNCPicker.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNCPicker.a;
-			remoteRef = 829581EF265F7F9C00CD2C6C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {

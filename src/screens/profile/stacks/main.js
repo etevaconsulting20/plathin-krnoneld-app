@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, RefreshControl,LogBox} from 'react-native';
-import {Picker} from '@react-native-community/picker';
+//import {Picker} from '@react-native-community/picker';
 import {connect} from 'react-redux';
 import I18n from 'react-native-i18n';
 import {ScrollView} from 'react-native-gesture-handler';
 
 import {getLanguageFromCode, AsyncStorage} from '../../../util/helpers/helpers';
 
-import {Container, Card, Left, Right} from 'native-base';
+import {Container, Card, Left, Right,Picker} from 'native-base';
 import {ListItem, Icon, Avatar, Input, Button} from 'react-native-elements';
 import {appConfig} from '../../../settings/settings';
 import {changeLanguage, update, getUserInfo} from '../../../actions/index';
@@ -46,6 +46,7 @@ class ProfileMainScreen extends Component {
 
   componentDidMount = async () => {
     LogBox.ignoreLogs(['Warning: ...']);
+    LogBox.ignoreAllLogs();
     flag = true;
 
     this.props.getUserInfo();

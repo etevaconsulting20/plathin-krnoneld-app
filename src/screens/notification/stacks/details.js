@@ -9,6 +9,7 @@ import {
   StyleSheet,
   BackHandler,
   TouchableOpacity,
+  Platform
 } from 'react-native';
 import {HeaderBackButton} from '@react-navigation/stack';
 import {appConfig} from '../../settings/settings';
@@ -87,11 +88,11 @@ class NotificationsMainScreen extends Component {
           getItemCount={this.getItemCount}
           getItem={this.getItem}
         /> */}
-        <TouchableOpacity style={{width:20,marginHorizontal:290}} onPress={()=>this.deleteNotification(data.id)}><Text><Icon name="trash" size={15} color="#900"  /></Text></TouchableOpacity>
+        <TouchableOpacity style={{width:20,marginHorizontal:340,marginTop:20}} onPress={()=>this.deleteNotification(data.id)}><Text><Icon name="trash" size={15} color="#900"  /></Text></TouchableOpacity>
 
-        <Text style={{fontSize:16,color:"#000",fontWeight:"bold",marginTop:-20,width:200}}>{data.title} </Text>
-        <Text style={{color:"grey"}}><Icon name="calendar-alt" size={15} color="grey" />  {date}</Text>
-        <Text style={{fontSize:14,marginTop:20}}>{data.body}</Text>
+        <Text style={{fontSize:16,color:"#000",fontWeight:"bold",width:200,marginHorizontal:30,marginTop:-15}}>{data.title} </Text>
+        <Text style={{color:"grey",marginHorizontal:30,marginTop:5}}><Icon name="calendar-alt" size={15} color="grey" />  {date}</Text>
+        <Text style={{fontSize:14,marginTop:20,marginHorizontal:30}}>{data.body}</Text>
         
       </SafeAreaView>
     );
@@ -101,14 +102,14 @@ class NotificationsMainScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 40,
     marginTop:10
   },
   item: {
     backgroundColor: 'red',
     height: 150,
     justifyContent: 'center',
-    marginVertical: 8,
+    marginVertical: 18,
     marginHorizontal: 16,
     padding: 20,
   },

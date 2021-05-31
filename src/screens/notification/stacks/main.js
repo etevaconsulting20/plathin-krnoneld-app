@@ -45,7 +45,7 @@ const Item = ({data}) => {
         <View
         style={{
           width:300,
-          marginHorizontal:250,
+          marginHorizontal:290,
          // marginVertical:-10,
           marginTop:-20,
           justifyContent:"center",alignItems:"center",

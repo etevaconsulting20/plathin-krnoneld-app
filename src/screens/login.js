@@ -49,7 +49,7 @@ class LoginScreen extends Component {
     LogBox.ignoreLogs(['WARN: `Accessing the state property of the route object is not supported.`']);
 
     fcToken = await AsyncStorage.getItem('token');
-
+console.log("fcToken",fcToken)
     if (this.props.isLoggedIn) {
       this.gotoMainApp();
     }

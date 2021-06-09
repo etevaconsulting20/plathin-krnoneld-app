@@ -9,7 +9,7 @@
 import React, {useEffect, Component} from 'react';
 
 import SplashScreen from 'react-native-splash-screen';
-import {Alert, LogBox, ToastAndroid} from 'react-native';
+import {Alert, LogBox, ToastAndroid,Platform} from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import 'react-native-gesture-handler';
@@ -43,12 +43,21 @@ class App extends Component {
       }
     }
     });
+    if(Platform.OS === 'ios'){
     messaging()
+      .getAPNSToken()
+      .then(async (data) => {
+        await AsyncStorage.setItem('token', data);
+      });
+    messaging().requestPermission();
+    }else{
+      messaging()
       .getToken()
       .then(async (data) => {
         await AsyncStorage.setItem('token', data);
       });
     messaging().requestPermission();
+    }
   };
 
   render() {

@@ -200,12 +200,8 @@
 		13B07FAE1A68108700A75B9A /* plathinkroneld */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				82E7A0D9265E8C5800F2F3A8 /* GoogleService-Info.plist */,
-=======
 				185586B02671E7F600BC7756 /* plathinkroneld.entitlements */,
 				18558209266E214A00BC7756 /* GoogleService-Info.plist */,
->>>>>>> d60e4b3053d4effd0c903bbcfbeaa011544f1b52
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -502,11 +498,7 @@
 				747B17CD03A640B29CA4BE59 /* Poppins-Medium.ttf in Resources */,
 				759057E8AC444EFE80FFD697 /* Poppins-Regular.ttf in Resources */,
 				689A272717994333AAE2215B /* Poppins-SemiBold.ttf in Resources */,
-<<<<<<< HEAD
-				82E7A0DA265E8C5800F2F3A8 /* GoogleService-Info.plist in Resources */,
-=======
 				1855820A266E214A00BC7756 /* GoogleService-Info.plist in Resources */,
->>>>>>> d60e4b3053d4effd0c903bbcfbeaa011544f1b52
 				7CA3600308654FA4BB02FF48 /* Roboto_medium.ttf in Resources */,
 				DC0FE48097B14ABA974EEE4C /* Roboto.ttf in Resources */,
 				7CD4E77BF3C04116A10DAFA0 /* rubicon-icon-font.ttf in Resources */,

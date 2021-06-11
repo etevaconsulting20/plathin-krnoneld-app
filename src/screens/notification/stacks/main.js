@@ -9,7 +9,8 @@ import {
   StyleSheet,
   Image,
   RefreshControl,
-  LogBox
+  LogBox,
+  Platform
 } from 'react-native';
 import {
   getAllNotifications,
@@ -41,6 +42,31 @@ const Item = ({data}) => {
         {' '}
         <Icon name="comments-o" size={25} color="#900" /> {data.title}
       </Text>
+      {Platform.OS === "ios" ?<>
+      {!data.isSeen && (
+        <View
+        style={{
+          width:300,
+          marginHorizontal:290,
+         // marginVertical:-10,
+          marginTop:-20,
+          justifyContent:"center",alignItems:"center",
+          width: 25,
+          height: 25,
+          borderRadius: 30 / 2,
+          backgroundColor: "green",
+        }}><Text style={{
+          color: 'white',
+          fontWeight:"bold",
+          fontSize:9,
+          textAlign:"center"
+        }}>
+        {I18n.t('New')}
+        </Text>
+        
+      </View>
+      )} </>:<>
+      
       {!data.isSeen && (
         <View
         style={{
@@ -63,7 +89,8 @@ const Item = ({data}) => {
         </Text>
         
       </View>
-      )}
+      )}</>
+      }
       <View style={{display:"flex"}}>
       <Text
         numberOfLines={1}

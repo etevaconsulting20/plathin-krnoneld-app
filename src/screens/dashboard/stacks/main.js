@@ -22,7 +22,7 @@ import {
   Right,
 } from 'native-base';
 import firebase from '@react-native-firebase/app';
-
+import messaging from '@react-native-firebase/messaging';
 class DashboardMainScreen extends Component {
   state = {
     searchText: '',
@@ -33,7 +33,7 @@ class DashboardMainScreen extends Component {
   };
   componentDidMount = async() => {
     LogBox.ignoreLogs(['Warning: ...']);    
-    const notificationOpen=await firebase.messaging().getInitialNotification()
+    const notificationOpen=await messaging().getInitialNotification()
         if (notificationOpen) {
          let obj= await JSON.stringify(notificationOpen);
          let parseJsonData = JSON.parse(obj);

@@ -55,7 +55,14 @@
          alert(data)
          await AsyncStorage.setItem('token', data);
        });
+       if (Platform.OS === 'ios') {
+     messaging().requestPermission({
+       provisional:true,
+       
+     });}
+     else{
      messaging().requestPermission();
+     }
    };
  
    render() {

@@ -59,5 +59,7 @@ buck-out/
 /ios/Pods/
 google-services.json
 
+/ios/
+GoogleService-info.plist
 # Android
 *.hprof

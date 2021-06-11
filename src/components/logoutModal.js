@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native"
+import { StyleSheet,Platform } from "react-native"
 import { Card, Text, Button } from "react-native-elements"
 import { View } from "native-base";
 import { appConfig } from "../settings/settings"
@@ -12,7 +12,7 @@ const LogoutConfirmationModal = ({ onConfirm, onCancel }) => {
         <>
             <View style={style.mainDiv}>
                 <Text style={{ fontSize: 18,fontFamily: 'Poppins-SemiBold' }}>{I18n.t("logout-confirmheader")}</Text>
-                <View style={style.messageDiv}>
+                <View style={Platform.OS === "ios"? style.messageDivIOS:style.messageDiv}>
     <Text style={{ fontSize: 16, textAlign: "center",fontFamily: appConfig.fontFamily }}>{I18n.t("logout-confirmmessage")}</Text>
                 </View>
                 <View style={style.buttonDiv}>
@@ -40,6 +40,13 @@ const style = StyleSheet.create({
         flex: 1.5,
         padding: 5,
         marginTop: 10
+    },
+    messageDivIOS:{
+        flex: 1.5,
+        paddingLeft: 5,
+        paddingRight:5,
+        //padding:2,
+        marginTop: 3,
     },
     buttonDiv: {
         alignSelf: "flex-end",
